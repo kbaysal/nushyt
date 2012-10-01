@@ -34,16 +34,46 @@ ul{
 .nav a{
 	float:left;
 	margin-left: 50px;
-
+	color: #043731;
 }
 .nav a:link {
-	color: #043731;
 	text-decoration: none;
 	padding:5px;
 }
-.nav a:visited {
-	color: #FFF;
-}
 .nav a:hover {
 	color: #FF6;
+}
+
+.result{
+	background-color: white;
+	width:800px;	
+	height: 150px;
+	margin-top: 50px;
+	margin-left: auto;
+	margin-right:auto;
+	border-radius: 10px;
+	color: #043731;
+}
+
+.result img{
+	position: relative;
+	top: 25px;
+	left: 25px;
+	height: 100px;
+}
+
+.result h1{
+	position: relative;
+	top:-100px;
+	left: 100px;
+}
+.result h2{
+	position: relative;
+	top:-120px;
+	right: -600px;
+}
+.result h3{
+	position: relative;
+	top:-130px;
+	left: 100px;
 }
