@@ -1,0 +1,49 @@
+body{
+	background-color: #009e8e;
+	color: #FFF;
+	font-family: 'Crete Round', serif;
+}
+
+.header{
+	color: #FFF;
+	z-index:100;
+	font-size: 72px;
+	text-align:center;
+
+	margin-left: auto;
+	margin-right:auto;
+}
+
+.top_bar{
+	width: 800px;
+	position:relative;
+	top:-20px;
+	margin-left: auto;
+	margin-right:auto;
+}
+
+ul{
+	list-style: none;
+	text-align:center;
+	font-size: 25px;
+	clear:both;
+	position:relative;
+	top:-20px;
+}
+
+.nav a{
+	float:left;
+	margin-left: 50px;
+
+}
+.nav a:link {
+	color: #043731;
+	text-decoration: none;
+	padding:5px;
+}
+.nav a:visited {
+	color: #FFF;
+}
+.nav a:hover {
+	color: #FF6;
+}
