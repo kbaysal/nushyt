@@ -5,8 +5,6 @@ var baseUrl = "http://api.rottentomatoes.com/api/public/v1.0";
 var theaterUrl = baseUrl + '/lists/movies/upcoming.json?apikey=' + apikey;
 var dvdUrl = baseUrl + '/lists/dvds/new_releases.json?apikey=' + apikey;
 
-var entries = [];
- 
 $(document).ready(function() {
   console.log(dvdUrl);
 // send off the query
@@ -51,4 +49,8 @@ function dvdCallback(data) {
    });
    entries = entries.sort(entryCompare);
    entries.forEach(createEntry);
+}
+
+function onSubmitMovie(){
+  
 }

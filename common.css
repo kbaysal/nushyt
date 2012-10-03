@@ -72,12 +72,33 @@ ul{
 	width: 200px;
 }
 
+#personal{
+	position: relative;
+	top: 100px;
+}
+
+
+#personal .result{
+	background-color: 043731;
+	width:800px;	
+	height: 150px;
+	margin-top: 25px;
+	margin-bottom: 25px;
+	margin-left: auto;
+	margin-right:auto;
+	border-radius: 10px;
+	color: white;
+	-moz-box-shadow:    0px 1px  5px 2px #043731;
+	-webkit-box-shadow:    0px 1px  5px 2px #043731;
+	box-shadow:    0px 1px  5px 2px #043731;
+}
+
 #results{
 	position: relative;
 	top: 100px;
 }
 
-.result{
+#results .result{
 	background-color: white;
 	width:800px;	
 	height: 150px;

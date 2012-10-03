@@ -1,5 +1,6 @@
 var likes = [];
 var inputs = [];
+var entries = [];
 
 
 
@@ -38,6 +39,24 @@ function createEntry(entry){
                           +'</div>');
 }
 
+function createPersonal(entry){
+  $("#personal").append('<div class=\"result\">'
+                          +'<img src="' + entry.picture + '" />'
+                          +'<h1>' + entry.title + '</h1>'
+                          +'<h2> Add to calendar </h2>'
+                          +'<h3>' + entry.detail + entry.month + "/" + entry.day + "/" + entry.year + '</h1>'
+                          +'</div>');
+}
+
+function contains(array, title){
+  var match = false;
+  array.forEach(function(element){
+    if(element['Name'] === title)
+      match = true;
+  });
+  return match;
+}
+
 var baseUrl = "http://www.tastekid.com/ask/ws?q=";
 
 function onSubmit(){
@@ -55,11 +74,25 @@ function likesCallback(data){
   var name = data['Similar']['Info']['0']['Name'];
   var type = data['Similar']['Info']['0']['Type'];
   if(type !== "unknown"){
-    inputs.push({'Name':name, 'Type':type});
-    $('#inputs').append('<h3>' + inputs[inputs.length-1]['Name'] + '</h3>');
+    if(!contains(inputs, name)){
+      inputs.push({'Name':name, 'Type':type});
+      $('#inputs').append('<h3>' + inputs[inputs.length-1]['Name'] + '</h3>');
+    }
+
+    if(!contains(likes, name))
+      likes.push({'Name':name, 'Type':type});
 
     data['Similar']['Results'].forEach(function(obj){
-      likes.push({'Name':obj['Name'], 'Type':obj['Type']});
+      if(!contains(likes, obj['Name']))
+        likes.push({'Name':obj['Name'], 'Type':obj['Type']});
+    });
+    $("#personal").empty();
+    entries.forEach(function(entry){
+      likes.forEach(function(like){
+        if(entry['title'].toLowerCase() === like['Name'].toLowerCase()){
+          createPersonal(entry);
+        }
+      });
     });
   }
   else{
