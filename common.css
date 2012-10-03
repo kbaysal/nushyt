@@ -18,6 +18,7 @@ body{
 	width: 800px;
 	position:relative;
 	top:-20px;
+	height: 30px;
 	margin-left: auto;
 	margin-right:auto;
 }
@@ -44,15 +45,51 @@ ul{
 	color: #FF6;
 }
 
+#prefs{
+	position: relative;
+	top: 100px;
+	width:800px;
+	margin-left: auto;
+	margin-right:auto;
+}
+
+#prefs input {        
+	width:800px;
+	border-radius: 10px;
+	height:40px;
+	padding-left: 10px;
+	font-size:25px;
+	border: 1px solid #CDCDCD;
+	text-align: center;
+	color: #043731;
+	font-family: 'Crete Round', serif;
+}
+
+#inputs{
+	position: absolute;
+	top: 100px;
+	left: 10px;
+	width: 200px;
+}
+
+#results{
+	position: relative;
+	top: 100px;
+}
+
 .result{
 	background-color: white;
 	width:800px;	
 	height: 150px;
-	margin-bottom: 50px;
+	margin-top: 25px;
+	margin-bottom: 25px;
 	margin-left: auto;
 	margin-right:auto;
 	border-radius: 10px;
 	color: #043731;
+	-moz-box-shadow:    0px 1px  5px 2px #043731;
+	-webkit-box-shadow:    0px 1px  5px 2px #043731;
+	box-shadow:    0px 1px  5px 2px #043731;
 }
 
 .result img{

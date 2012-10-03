@@ -3,7 +3,7 @@ var secret = "WCZpfUvnrX";
 var baseUrl = "http://api.rovicorp.com/search/v2.1";
  
 // construct the uri with our apikey
-var tvUrl = baseUrl + '/amgvideo/filterbrowse?apikey=' + apikey + '&sig=' + genSig(apikey, secret)+ "&entitytype=tvseries&format=json";
+var tvUrl = 'http://hkr.me:8001/?jsonp=tvCallback&url='+ baseUrl + '/amgvideo/filterbrowse?apikey=' + apikey + '&sig=' + genSig(apikey, secret)+ "&entitytype=tvseries&filter=releaseYear%62;2011&format=json";
 
 var entries = [];
  
@@ -12,12 +12,18 @@ $(document).ready(function() {
 
 console.log(tvUrl);
 
-//$.getJSON("http://hkr.me:8001/?url="+ tvUrl + "&entitytype=tvseries&filter=releaseYear=2012&format=json&callback=?", tvCallback);
-$.ajax({
-    url: tvUrl,
-    dataType: "jsonp",
-    success: tvCallback
-  });
+//$.getJSON("http://hkr.me:8001/?url="+ tvUrl + "&entitytype=tvseries&filter=releaseYear>2011&format=json&callback=?", tvCallback);
+ if (window.jsonpCallbackId === undefined)
+            window.jsonpCallbackId = 0
+        window.jsonpCallbackId ++;
+    var callbackName = "jsonpcallback_" + window.jsonpCallbackId;
+    window[callbackName] = function(json){
+        delete window[callbackName];
+        callback(json);
+    }
+document.write(    "<script " +
+"src=" + "./local/fullschedule.xml>" +
+"</script>");
 });
 
  
