@@ -1,39 +1,37 @@
-var apikey = "8gn2qubry7hg4xj4meb8hpuv";
-var secret = "WCZpfUvnrX";
-var baseUrl = "http://api.rovicorp.com/search/v2.1";
- 
-// construct the uri with our apikey
-var tvUrl = 'http://hkr.me:8001/?jsonp=tvCallback&url='+ baseUrl + '/amgvideo/filterbrowse?apikey=' + apikey + '&sig=' + genSig(apikey, secret)+ "&entitytype=tvseries&filter=releaseYear%62;2011&format=json";
-
-var entries = [];
- 
 $(document).ready(function() {
-// send off the query
+    // send off the query
+    var apikey = "8gn2qubry7hg4xj4meb8hpuv";
+    var secret = "WCZpfUvnrX";
+    var baseUrl = "http%3A%2F%2Fapi.rovicorp.com%2Fsearch%2Fv2.1";
 
-console.log(tvUrl);
+    //http%3A%2F%2Fapi.rovicorp.com%2Fsearch%2Fv2.1%2Famgvideo%2Ffilterbrowse%3Fapikey%3D8gn2qubry7hg4xj4meb8hpuv%26sig%3D16c6f3969f8a57d688dc44f1907a737a%26entitytype%3Dtvseries%26filter%3DreleaseYear%253E2011%26format%3Djson
+    // construct the uri with our apikey
+    var tvUrl = 'http://jsonp.jit.su/?callback=tvCallback&url='+ baseUrl + '%2Famgvideo%2Ffilterbrowse%3Fapikey%3D' + apikey + '%26sig%3D' + genSig(apikey, secret)+ "%26entitytype%3Dtvseries%26filter%3DreleaseYear%253E2011%26format%3Djson";
 
-//$.getJSON("http://hkr.me:8001/?url="+ tvUrl + "&entitytype=tvseries&filter=releaseYear>2011&format=json&callback=?", tvCallback);
- if (window.jsonpCallbackId === undefined)
-            window.jsonpCallbackId = 0
-        window.jsonpCallbackId ++;
-    var callbackName = "jsonpcallback_" + window.jsonpCallbackId;
-    window[callbackName] = function(json){
-        delete window[callbackName];
-        callback(json);
-    }
-document.write(    "<script " +
-"src=" + "./local/fullschedule.xml>" +
-"</script>");
+    console.log(tvUrl);
+
+    $.ajax({
+        url: tvUrl,
+        dataType: "jsonp",
+        success: tvCallback
+      });
 });
 
  
 // callback for when we get back the results
 function tvCallback(data) {
-   console.log("hello");
-}
-
-function jsonp(data) {
-   console.log(data);
+   var shows = data.searchResponse.results;
+   var entry, day, month, year, date, title;
+   shows.forEach(function(show) {
+        month = 0;
+        day = 0;
+        year = show.movie.releaseYear;
+        title = show.movie.title.replace(" [TV Series]", "");
+        entry = new Entry(title, month, day, year, "On TV: ", show.movie.imagesUri);
+        entries.push(entry);
+   });
+   entries = entries.sort(entryCompare);
+   entries.forEach(createEntry);
 }
 
 function genSig(api, s) {
