@@ -1,6 +1,7 @@
 var likes = [];
 var inputs = [];
 var entries = [];
+var images = [];
 
 function Entry(title, month, day, year, detail, picture){
     this.month = month; 
