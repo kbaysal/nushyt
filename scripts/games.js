@@ -2,11 +2,11 @@ $(document).ready(function(){
 
 	var apiKey = 'a89ef9e46dc12344bc03693998d9edadf773a514';
 	//{resource} used in JQUERY REST implementation
-	var baseUrl = "http://api.giantbomb.com/games/?format=jsonp&sort=release_date&json_callback=data&api_key=a89ef9e46dc12344bc03693998d9edadf773a514";
+	var baseUrl = "http://api.giantbomb.com/releases/?format=jsonp&sort=release_date&json_callback=gameCallBack&api_key=a89ef9e46dc12344bc03693998d9edadf773a514";
 
 	$.ajax({
 		url: baseUrl,
-		type: 'GET',
+		dataType: "jsonp",
 		success: gameCallBack
 	});
 
