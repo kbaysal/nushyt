@@ -3,6 +3,10 @@ var inputs = [];
 var entries = [];
 var images = [];
 
+var clientId = '696158853178.apps.googleusercontent.com';
+var apiKey = 'AIzaSyBaPMTZhvwVYcgvXbB7wIuxnIgmhA2qnYU';
+var scopes = 'https://www.googleapis.com/auth/calendar';
+
 function Entry(title, month, day, year, detail, picture){
     this.month = month; 
     this.day = day;
@@ -10,6 +14,72 @@ function Entry(title, month, day, year, detail, picture){
     this.title = title;
     this.picture = picture;
     this.detail = detail;
+}
+
+function handleClientLoad() {
+  gapi.client.setApiKey(apiKey);
+  window.setTimeout(checkAuth,1);
+}
+
+function checkAuth() {
+  gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: true}, handleAuthResult);
+}
+
+function handleAuthResult(authResult) {
+  var authorizeButton = document.getElementById('authorize-button');
+  if (authResult && !authResult.error) {
+    authorizeButton.style.visibility = 'hidden';
+    makeApiCall();
+  } else {
+    authorizeButton.style.visibility = '';
+    authorizeButton.onclick = handleAuthClick;
+  }
+}
+
+function handleAuthClick(event) {
+  gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, handleAuthResult);
+  return false;
+}
+
+function envokeGoogle() {
+   gapi.client.setApiKey(apiKey);
+    gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, function() {
+        gapi.client.load('calendar', 'v3', function() {
+            var request = gapi.client.calendar.calendars.insert({
+                'resource': {
+                    'summary': "Nushyt",
+                    'description': "A calendar for new media you are interested in."
+                }
+            });
+            request.execute(function(resp) {
+                var id = resp.id;
+                var req = gapi.client.calendar.events.insert({
+                    'calendarId': id,
+                    'resource': {
+                        'summary': "Event!",
+                        'start': {
+                            'date': "2012-10-04"
+                        },
+                        'end': {
+                            'date': "2012-10-04"
+                        },
+                        "reminders": {
+                            "useDefaults": true
+                        }
+
+
+                    }
+                });
+                req.execute(function() {
+                    console.log("Event added!");
+                })
+            });
+        });
+    });
+}
+
+function generateCalendar() {
+    
 }
 
 function entryCompare(e1, e2){
@@ -33,7 +103,7 @@ function createEntry(entry){
     $("#results").append('<div class=\"result\">'
                           +'<img src="' + entry.picture + '" />'
                           +'<h1>' + entry.title + '</h1>'
-                          +'<h2> Add to calendar </h2>'
+                          +'<h2 id=1> Add to calendar </h2>'
                           +'<h3>' + entry.detail + entry.month + "/" + entry.day + "/" + entry.year + '</h1>'
                           +'</div>');
 }
