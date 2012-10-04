@@ -161,6 +161,7 @@ function onSubmit(){
 }
 
 function likesCallback(data){
+    //get likes
     var name = data['Similar']['Info']['0']['Name'];
     var type = data['Similar']['Info']['0']['Type'];
     if(type !== "unknown"){
