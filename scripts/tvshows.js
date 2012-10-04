@@ -17,21 +17,33 @@ $(document).ready(function() {
       });
 });
 
+var albumNum = 0;
  
 // callback for when we get back the results
 function tvCallback(data) {
-   var shows = data.searchResponse.results;
-   var entry, day, month, year, date, title;
-   shows.forEach(function(show) {
+    var shows = data.searchResponse.results;
+    var entry, day, month, year, date, title;
+    albumNum = shows.length();
+    shows.forEach(function(show) {
         month = 0;
         day = 0;
         year = show.movie.releaseYear;
         title = show.movie.title.replace(" [TV Series]", "");
         entry = new Entry(title, month, day, year, "On TV: ", show.movie.imagesUri);
         entries.push(entry);
-   });
-   entries = entries.sort(entryCompare);
-   entries.forEach(createEntry);
+        imageUrl = 'http://jsonp.jit.su/?callback=imageCallback&url=' + album.album.imagesUri + '%26sig%3D' + genSig(apikey, secret);
+        $.ajax({
+            url: imageUrl,
+            dataType: "jsonp",
+            success: imageCallback
+        });
+    });
+    entries = entries.sort(entryCompare);
+    entries.forEach(createEntry);
+}
+
+function imageCallback(data){
+
 }
 
 function genSig(api, s) {

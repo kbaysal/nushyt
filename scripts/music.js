@@ -14,15 +14,15 @@ $(document).ready(function() {
         url: musicUrl,
         dataType: "jsonp",
         success: albumCallback
-      });
+    });
 });
 
  
 // callback for when we get back the results
 function albumCallback(data) {
-   var albums = data.searchResponse.results;
-   var entry, day, month, year, date, title;
-   albums.forEach(function(album) {
+    var albums = data.searchResponse.results;
+    var entry, day, month, year, date, title;
+    albums.forEach(function(album) {
         date = album.album.originalReleaseDate.split("-");
         day = date[2];
         month = date[1];
@@ -30,9 +30,9 @@ function albumCallback(data) {
         title = album.album.title;
         entry = new Entry(title, month, day, year,  " by " + album.album.primaryArtists[0].name + " - Album Out: ", album.album.imagesUri);
         entries.push(entry);
-   });
-   entries = entries.sort(entryCompare);
-   entries.forEach(createEntry);
+    });
+    entries = entries.sort(entryCompare);
+    entries.forEach(createEntry);
 }
 
 function genSig(api, s) {
