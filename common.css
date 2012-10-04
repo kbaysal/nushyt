@@ -125,6 +125,9 @@ ul{
 	position: relative;
 	top:-100px;
 	left: 100px;
+	overflow: hidden;
+	height:45px;
+	width:650px;
 }
 .result h2{
 	position: relative;
