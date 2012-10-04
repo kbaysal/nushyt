@@ -5,9 +5,9 @@ $(document).ready(function() {
     var apikey = "2n2jcb9yw5a9qat694epm3qf";
     var baseUrl = "http://api.rottentomatoes.com/api/public/v1.0";
 
-    // construct the uri with our apikey
+    // api.rottentomatoes.com/api/public/v1.0/lists/dvds/upcoming.json?page_limit=16&page=1&country=us&apikey=2n2jcb9yw5a9qat694epm3qf
     var theaterUrl = baseUrl + '/lists/movies/upcoming.json?apikey=' + apikey;
-    var dvdUrl = baseUrl + '/lists/dvds/new_releases.json?apikey=' + apikey;
+    var dvdUrl = baseUrl + '/lists/dvds/upcoming.json?&country=us&apikey=' + apikey;
 
     console.log(dvdUrl);
     // send off the query

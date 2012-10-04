@@ -1,7 +1,9 @@
-$(document).ready(function() {
-    // send off the query
+
     var apikey = "8gn2qubry7hg4xj4meb8hpuv";
     var secret = "WCZpfUvnrX";
+
+$(document).ready(function() {
+    // send off the query
     var baseUrl = "http%3A%2F%2Fapi.rovicorp.com%2Fsearch%2Fv2.1";
 
     //http%3A%2F%2Fapi.rovicorp.com%2Fsearch%2Fv2.1%2Famgvideo%2Ffilterbrowse%3Fapikey%3D8gn2qubry7hg4xj4meb8hpuv%26sig%3D16c6f3969f8a57d688dc44f1907a737a%26entitytype%3Dtvseries%26filter%3DreleaseYear%253E2011%26format%3Djson
@@ -17,22 +19,44 @@ $(document).ready(function() {
     });
 });
 
+
+var entry, day, month, year, date, title;
+
  
 // callback for when we get back the results
 function albumCallback(data) {
     var albums = data.searchResponse.results;
-    var entry, day, month, year, date, title;
     albums.forEach(function(album) {
         date = album.album.originalReleaseDate.split("-");
         day = date[2];
         month = date[1];
         year = date[0];
         title = album.album.title;
+        imageUrl = 'http://jsonp.jit.su/?callback=imageCallback&url=' + album.album.imagesUri + '%26sig%3D' + genSig(apikey, secret);
+        $.ajax({
+            url: imageUrl,
+            dataType: "jsonp",
+            success: imageCallback
+        });
+        console.log(imageUrl);
         entry = new Entry(title, month, day, year,  " by " + album.album.primaryArtists[0].name + " - Album Out: ", album.album.imagesUri);
         entries.push(entry);
     });
     entries = entries.sort(entryCompare);
     entries.forEach(createEntry);
+}
+
+function imageCallback(data){
+    var found = false;
+    imageCount++;
+    if(imageCount === albumNum){
+        callback();
+    }
+    data.images.forEach(function(image){
+        if(found === false && image.height >= 100){
+            var poster = image.url;
+        }
+    });
 }
 
 function genSig(api, s) {

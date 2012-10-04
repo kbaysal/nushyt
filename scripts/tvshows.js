@@ -1,7 +1,9 @@
-$(document).ready(function() {
-    // send off the query
+
     var apikey = "8gn2qubry7hg4xj4meb8hpuv";
     var secret = "WCZpfUvnrX";
+
+$(document).ready(function() {
+    // send off the query
     var baseUrl = "http%3A%2F%2Fapi.rovicorp.com%2Fsearch%2Fv2.1";
 
     //http%3A%2F%2Fapi.rovicorp.com%2Fsearch%2Fv2.1%2Famgvideo%2Ffilterbrowse%3Fapikey%3D8gn2qubry7hg4xj4meb8hpuv%26sig%3D16c6f3969f8a57d688dc44f1907a737a%26entitytype%3Dtvseries%26filter%3DreleaseYear%253E2011%26format%3Djson
@@ -18,32 +20,38 @@ $(document).ready(function() {
 });
 
 var albumNum = 0;
+var imageCount = 0;
+
+var entry, day, month, year, date, title;
  
 // callback for when we get back the results
 function tvCallback(data) {
     var shows = data.searchResponse.results;
-    var entry, day, month, year, date, title;
-    albumNum = shows.length();
     shows.forEach(function(show) {
         month = 0;
         day = 0;
         year = show.movie.releaseYear;
         title = show.movie.title.replace(" [TV Series]", "");
-        entry = new Entry(title, month, day, year, "On TV: ", show.movie.imagesUri);
-        entries.push(entry);
-        imageUrl = 'http://jsonp.jit.su/?callback=imageCallback&url=' + album.album.imagesUri + '%26sig%3D' + genSig(apikey, secret);
-        $.ajax({
-            url: imageUrl,
-            dataType: "jsonp",
-            success: imageCallback
-        });
+        imageUrl = 'http://jsonp.jit.su/?callback=imageCallback&url=' + show.movie.imagesUri + '%26sig%3D' + genSig(apikey, secret);
+                   
+            entry = new Entry(title, month, day, year, "On TV: ", show.movie.imagesUri);
+            entries.push(entry);
+        console.log(imageUrl);
     });
     entries = entries.sort(entryCompare);
     entries.forEach(createEntry);
 }
 
 function imageCallback(data){
-
+    var found = false;
+    if(imageCount === albumNum){
+        callback();
+    }
+    data.images.forEach(function(image){
+        if(found === false && image.height >= 100){ 
+            found = true;
+        }
+    });
 }
 
 function genSig(api, s) {
