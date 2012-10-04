@@ -44,7 +44,6 @@ function albumCallback(data) {
             dataType: "jsonp",
             success: imageCallback
         });
-        console.log('http://ws.audioscrobbler.com/2.0/?method=album.getinfo&format=json&callback=imageCallback&api_key=' + api_key + '&artist=' + band + "&album=" + title);
     });
 }
 
