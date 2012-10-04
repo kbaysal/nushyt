@@ -149,6 +149,7 @@ function createEntry(entry, index){
                           +'<h3>' + entry.detail + entry.month + "/" + entry.day + "/" + entry.year + '</h1>'
                           +'</div>');
     var addButton = document.getElementById(index).addEventListener('click', add, false);
+    drawBanner();
 }
 
 function createPersonal(entry){

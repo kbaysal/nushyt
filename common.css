@@ -8,6 +8,7 @@ body{
 	position:absolute;
 	margin-left:auto;
 	margin-right:auto;
+	z-index:-1;
 }
 
 .header{
@@ -15,6 +16,7 @@ body{
 	z-index:100;
 	font-size: 72px;
 	text-align:center;
+	-webkit-text-stroke: 1px #000;
 
 	margin-left: auto;
 	margin-right:auto;
@@ -72,6 +74,7 @@ ul{
 }
 
 #inputs{
+	-webkit-text-stroke: 1px #000;
 	position: absolute;
 	top: 100px;
 	left: 10px;
