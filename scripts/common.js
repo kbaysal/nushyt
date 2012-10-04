@@ -2,6 +2,7 @@ var likes = [];
 var inputs = [];
 var entries = [];
 var images = [];
+var added = [];
 
 var clientId = '696158853178.apps.googleusercontent.com';
 var apiKey = 'AIzaSyBaPMTZhvwVYcgvXbB7wIuxnIgmhA2qnYU';
@@ -53,33 +54,28 @@ function envokeGoogle() {
             });
             request.execute(function(resp) {
                 var id = resp.id;
-                var req = gapi.client.calendar.events.insert({
-                    'calendarId': id,
-                    'resource': {
-                        'summary': "Event!",
-                        'start': {
-                            'date': "2012-10-04"
-                        },
-                        'end': {
-                            'date': "2012-10-04"
-                        },
-                        "reminders": {
-                            "useDefaults": true
+                added.forEach(function(entry) {
+                    var req = gapi.client.calendar.events.insert({
+                        'calendarId': id,
+                        'resource': {
+                            'summary': entry.title,
+                            'start': {
+                                'date': entry.year + "-" + entry.month + "-" + entry.day
+                            },
+                            'end': {
+                                'date': entry.year + "-" + entry.month + "-" + entry.day
+                            },
+                            "reminders": {
+                                "useDefaults": true
+                            }
                         }
-
-
-                    }
+                    });
+                    req.execute(function() {
+                    });
                 });
-                req.execute(function() {
-                    console.log("Event added!");
-                })
             });
         });
     });
-}
-
-function generateCalendar() {
-    
 }
 
 function entryCompare(e1, e2){
@@ -99,13 +95,25 @@ function entryCompare(e1, e2){
     else return -1;
 }
 
-function createEntry(entry){
+function add(e){
+    var index = e.target.getAttribute("id");
+    var entry = entries[index];
+    if (!containsEntry(added, entry)) {
+        added.push(entry);
+        console.log("added event " + entry.title);
+    } else {
+        console.log(entry.title + " has already been added.");
+    }
+}
+
+function createEntry(entry, index){
     $("#results").append('<div class=\"result\">'
                           +'<img src="' + entry.picture + '" />'
                           +'<h1>' + entry.title + '</h1>'
-                          +'<h2 id=1> Add to calendar </h2>'
+                          +'<h2 id=' + index + '> Add to calendar </h2>'
                           +'<h3>' + entry.detail + entry.month + "/" + entry.day + "/" + entry.year + '</h1>'
                           +'</div>');
+    var addButton = document.getElementById(index).addEventListener('click', add, false);
 }
 
 function createPersonal(entry){
@@ -122,6 +130,15 @@ function contains(array, title){
     array.forEach(function(element){
     if(element['Name'] === title)
       match = true;
+    });
+    return match;
+}
+
+function containsEntry(array, entry) {
+    var match = false;
+    array.forEach(function(element) {
+        if (entry.title === element.title)
+            match = true;
     });
     return match;
 }
@@ -174,7 +191,11 @@ function likesCallback(data){
 
 function callback(){
     entries = entries.sort(entryCompare);
-    entries.forEach(createEntry);
+    var count = 0;
+    entries.forEach(function(entry) {
+        createEntry(entry, count);
+        count++;
+    });
 }
 
 $(document).ready(function() {
