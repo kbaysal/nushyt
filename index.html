@@ -8,12 +8,16 @@
 @import url("common.css");
 </style>
 
-<link href='http://fonts.googleapis.com/css?family=Crete+Round' rel='stylesheet' type='text/css'>
-
+    <style type="text/css">@import "jquery.icalendar.css";</style> 
 </head>
 
 <body>
     <div class="top_bar">
+        <div class="canvas">
+            <canvas id="myCanvas" width="800" height="92" style="border:1px solid #000000;">
+                No canvas available!
+            </canvas>
+        </div>
     	<div class="header">
     		nushyt
     	</div>
@@ -41,6 +45,7 @@
     <script type="text/javascript" src="scripts/md5.js"></script>
     <script src="scripts/common.js"></script>
     <script src="scripts/all.js"></script>
+    <script src="scripts/canvasArtist.js"></script>
 </body>
 
 </html>
