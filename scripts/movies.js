@@ -33,7 +33,7 @@ function theaterCallback(data) {
         day = date[2];
         month = date[1];
         year = date[0];
-        entry = new Entry(movie.title, month, day, year, "In Theaters: ", movie.posters.thumbnail);
+        entry = new Entry(movie.title, month, day, year, "In Theaters: ", movie.posters.thumbnail, "movie");
         entries.push(entry);
     });
     count++;
@@ -50,7 +50,7 @@ function dvdCallback(data) {
         day = date[2];
         month = date[1];
         year = date[0];
-        entry = new Entry(movie.title, month, day, year, "On DVD: ", movie.posters.thumbnail);
+        entry = new Entry(movie.title, month, day, year, "On DVD: ", movie.posters.thumbnail, "movie");
         entries.push(entry); 
     });
    
