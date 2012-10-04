@@ -2,11 +2,13 @@ var likes = [];
 var inputs = [];
 var entries = [];
 var images = [];
+var toAdd = [];
 var added = [];
 
 var clientId = '696158853178.apps.googleusercontent.com';
 var apiKey = 'AIzaSyBaPMTZhvwVYcgvXbB7wIuxnIgmhA2qnYU';
 var scopes = 'https://www.googleapis.com/auth/calendar';
+var nushytCalId;
 
 function Entry(title, month, day, year, detail, picture){
     this.month = month; 
@@ -17,7 +19,7 @@ function Entry(title, month, day, year, detail, picture){
     this.detail = detail;
 }
 
-function handleClientLoad() {
+function authorize() {
   gapi.client.setApiKey(apiKey);
   window.setTimeout(checkAuth,1);
 }
@@ -27,55 +29,85 @@ function checkAuth() {
 }
 
 function handleAuthResult(authResult) {
-  var authorizeButton = document.getElementById('authorize-button');
+  var authorizeButton = document.getElementById('googleButton');
   if (authResult && !authResult.error) {
-    authorizeButton.style.visibility = 'hidden';
     makeApiCall();
   } else {
-    authorizeButton.style.visibility = '';
     authorizeButton.onclick = handleAuthClick;
   }
 }
 
 function handleAuthClick(event) {
-  gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, handleAuthResult);
+  gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, makeApiCall);
   return false;
 }
 
-function envokeGoogle() {
-   gapi.client.setApiKey(apiKey);
-    gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, function() {
-        gapi.client.load('calendar', 'v3', function() {
-            var request = gapi.client.calendar.calendars.insert({
-                'resource': {
-                    'summary': "Nushyt",
-                    'description': "A calendar for new media you are interested in."
+function makeApiCall() {
+    gapi.client.load('calendar', 'v3', createNushytCalendar);
+}
+
+function createNushytCalendar() {
+    if (undefined === nushytCalId) {
+        var request = gapi.client.calendar.calendarList.list({
+            'minAccessRole': 'writer',
+            'showHidden': true
+        });
+        request.execute(parseList);
+    } else {
+        populateCalendar();
+    }
+}
+
+function parseList(jsonResp, rawResp) {
+    var list = jsonResp.items;
+    var lookingForCal = true;
+    list.forEach(function(calendar) {
+        if (lookingForCal && calendar.summary === "Nushyt") {
+            nushytCalId = calendar.id;
+            populateNushytCalendar();
+            lookingForCal = false;
+        }
+    })
+    if (lookingForCal) {
+        createNewCalendar();
+    }
+}
+
+function createNewCalendar() {
+    var request = gapi.client.calendar.calendars.insert({
+        'resource': {
+            'summary': "Nushyt",
+            'description': "A calendar for new media you are interested in."
+        }
+    });
+    request.execute(function(response) {
+        nushytCalId = response.id;
+        populateNushytCalendar();
+    });
+}
+
+function populateNushytCalendar() {
+    toAdd.forEach(function(entry) {
+        var request = gapi.client.calendar.events.insert({
+            'calendarId': nushytCalId,
+            'resource': {
+                'summary': entry.title,
+                'start': {
+                    'date': entry.year + "-" + entry.month + "-" + entry.day
+                },
+                'end': {
+                    'date': entry.year + "-" + entry.month + "-" + entry.day
+                },
+                "reminders": {
+                    "useDefaults": true
                 }
-            });
-            request.execute(function(resp) {
-                var id = resp.id;
-                added.forEach(function(entry) {
-                    var req = gapi.client.calendar.events.insert({
-                        'calendarId': id,
-                        'resource': {
-                            'summary': entry.title,
-                            'start': {
-                                'date': entry.year + "-" + entry.month + "-" + entry.day
-                            },
-                            'end': {
-                                'date': entry.year + "-" + entry.month + "-" + entry.day
-                            },
-                            "reminders": {
-                                "useDefaults": true
-                            }
-                        }
-                    });
-                    req.execute(function() {
-                    });
-                });
-            });
+            }
+        });
+        request.execute(function() {
+            added.push(entry);
         });
     });
+    toAdd = [];
 }
 
 function entryCompare(e1, e2){
@@ -98,8 +130,8 @@ function entryCompare(e1, e2){
 function add(e){
     var index = e.target.getAttribute("id");
     var entry = entries[index];
-    if (!containsEntry(added, entry)) {
-        added.push(entry);
+    if (!(containsEntry(toAdd, entry) || containsEntry(added, entry))) {
+        toAdd.push(entry);
         console.log("added event " + entry.title);
     } else {
         console.log(entry.title + " has already been added.");
