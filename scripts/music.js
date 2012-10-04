@@ -1,9 +1,9 @@
 
-    var apikey = "8gn2qubry7hg4xj4meb8hpuv";
-    var secret = "WCZpfUvnrX";
 
 $(document).ready(function() {
     // send off the query
+    var apikey = "8gn2qubry7hg4xj4meb8hpuv";
+    var secret = "WCZpfUvnrX";
     var baseUrl = "http%3A%2F%2Fapi.rovicorp.com%2Fsearch%2Fv2.1";
 
     //http%3A%2F%2Fapi.rovicorp.com%2Fsearch%2Fv2.1%2Famgvideo%2Ffilterbrowse%3Fapikey%3D8gn2qubry7hg4xj4meb8hpuv%26sig%3D16c6f3969f8a57d688dc44f1907a737a%26entitytype%3Dtvseries%26filter%3DreleaseYear%253E2011%26format%3Djson
@@ -19,31 +19,33 @@ $(document).ready(function() {
     });
 });
 
-
-var entry, day, month, year, date, title;
-
+var imageCount = 0;
+var albumNum;
  
 // callback for when we get back the results
 function albumCallback(data) {
+    var entry, day, month, year, date, title, band;
+    var api_key = "69de64d9645edd7e1f9bb2e1edfef4f1";
     var albums = data.searchResponse.results;
+    albumNum = albums.length;
     albums.forEach(function(album) {
         date = album.album.originalReleaseDate.split("-");
         day = date[2];
         month = date[1];
         year = date[0];
         title = album.album.title;
-        imageUrl = 'http://jsonp.jit.su/?callback=imageCallback&url=' + album.album.imagesUri + '%26sig%3D' + genSig(apikey, secret);
+        band = album.album.primaryArtists[0].name;
+        entry = new Entry(title, month, day, year,  " by " + band+ " - Album Out: ", "", "music");
+        entries.push(entry);
+        //http%3A%2F%2Fws.audioscrobbler.com%2F2.0%2F%3Fmethod%3Dalbum.getinfo%26api_key%3D69de64d9645edd7e1f9bb2e1edfef4f1%26artist%3DBrandy%26album%3DTwo%2520Eleven%26format%3Djson
+        imageUrl = 'http://ws.audioscrobbler.com/2.0/?method=album.getinfo&format=json&callback=imageCallback&api_key=' + api_key + '&artist=' + band + "&album=" + title;
         $.ajax({
             url: imageUrl,
             dataType: "jsonp",
             success: imageCallback
         });
-        console.log(imageUrl);
-        entry = new Entry(title, month, day, year,  " by " + album.album.primaryArtists[0].name + " - Album Out: ", album.album.imagesUri);
-        entries.push(entry);
+        console.log('http://ws.audioscrobbler.com/2.0/?method=album.getinfo&format=json&callback=imageCallback&api_key=' + api_key + '&artist=' + band + "&album=" + title);
     });
-    entries = entries.sort(entryCompare);
-    entries.forEach(createEntry);
 }
 
 function imageCallback(data){
@@ -52,11 +54,18 @@ function imageCallback(data){
     if(imageCount === albumNum){
         callback();
     }
-    data.images.forEach(function(image){
-        if(found === false && image.height >= 100){
-            var poster = image.url;
-        }
-    });
+    else if(data.album !== undefined){
+        data.album.image.forEach(function(image){
+            if(found === false && image.size === "large"){ 
+                entries.forEach(function(entry){
+                    if(entry.title === data.album.name || entry.detail.indexOf(data.album.artist)>-1){
+                        entry["picture"] = image["#text"];
+                        found = true;
+                    }
+                });
+            }
+        });
+    }
 }
 
 function genSig(api, s) {

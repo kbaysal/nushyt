@@ -1,14 +1,5 @@
-
-    var apikey = "8gn2qubry7hg4xj4meb8hpuv";
-    var secret = "WCZpfUvnrX";
-
 $(document).ready(function() {
-    // send off the query
-    var baseUrl = "http%3A%2F%2Fapi.rovicorp.com%2Fsearch%2Fv2.1";
-
-    //http%3A%2F%2Fapi.rovicorp.com%2Fsearch%2Fv2.1%2Famgvideo%2Ffilterbrowse%3Fapikey%3D8gn2qubry7hg4xj4meb8hpuv%26sig%3D16c6f3969f8a57d688dc44f1907a737a%26entitytype%3Dtvseries%26filter%3DreleaseYear%253E2011%26format%3Djson
-    // construct the uri with our apikey
-    var tvUrl = 'http://jsonp.jit.su/?callback=tvCallback&url='+ baseUrl + '%2Famgvideo%2Ffilterbrowse%3Fapikey%3D' + apikey + '%26sig%3D' + genSig(apikey, secret)+ "%26entitytype%3Dtvseries%26filter%3DreleaseYear%253E2011%26format%3Djson";
+    var tvUrl = 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%20%3D%20%22http://www.metacritic.com/browse/tv/release-date/new-series/date?view=detailed%22%20and%20xpath%3D%22*%22&format=xml&callback=tvCallback';
 
     console.log(tvUrl);
 
@@ -16,42 +7,64 @@ $(document).ready(function() {
         url: tvUrl,
         dataType: "jsonp",
         success: tvCallback
-      });
+    });
 });
-
-var albumNum = 0;
-var imageCount = 0;
-
-var entry, day, month, year, date, title;
  
 // callback for when we get back the results
 function tvCallback(data) {
-    var shows = data.searchResponse.results;
-    shows.forEach(function(show) {
-        month = 0;
-        day = 0;
-        year = show.movie.releaseYear;
-        title = show.movie.title.replace(" [TV Series]", "");
-        imageUrl = 'http://jsonp.jit.su/?callback=imageCallback&url=' + show.movie.imagesUri + '%26sig%3D' + genSig(apikey, secret);
-                   
-            entry = new Entry(title, month, day, year, "On TV: ", show.movie.imagesUri);
-            entries.push(entry);
-        console.log(imageUrl);
-    });
-    entries = entries.sort(entryCompare);
-    entries.forEach(createEntry);
-}
+    var html = data.results[0];
+    var title, date, day, month, year, img;
+    //title:<h3 class="product_title"><a   href="/tv/call-the-midwife/season-1">Call The Midwife: Season 1</a>
+    //date:<li class="stat release_date"><span class="label">Start date:</span><span class="data">Sep 30, 2012</span>
+    //img: <img class="product_image small_image" src="http://img1.gamespotcdn.net/metacritic/public/www/images/products/tv/0/15418a00f4a1e64ae83a55d3183be8e0-53.jpg" alt="Call The Midwife: Season 1 Image" />
+    var index = 0;
+    var counter = 0;
+    
 
-function imageCallback(data){
-    var found = false;
-    if(imageCount === albumNum){
-        callback();
+    while(counter<20){
+        //get title
+        var identifier = '<h3 class="product_title">';
+        index = html.indexOf(identifier) + identifier.length;
+        html = html.substring(index, html.length);
+        identifier = '">';
+        index = html.indexOf(identifier) + identifier.length;
+        html = html.substring(index, html.length); 
+        identifier = '</a>';
+        index = html.indexOf(identifier);
+        title = html.substring(0, index);
+        console.log(title);
+
+        //get date:
+        var identifier = 'Start date:';
+        index = html.indexOf(identifier) + identifier.length;
+        html = html.substring(index, html.length);
+        var identifier = '<span class="data">';   
+        index = html.indexOf(identifier) + identifier.length;
+        html = html.substring(index, html.length); 
+        identifier = '</span>';
+        index = html.indexOf(identifier);
+        date = html.substring(0, index);
+        console.log(date);
+        month = "09";
+        day = date.substring(4, 6);
+        year = "2012";
+
+        //get image: 
+        var identifier = '<img class="product_image small_image"';
+        index = html.indexOf(identifier) + identifier.length;
+        html = html.substring(index, html.length);
+        var identifier = 'src="';   
+        index = html.indexOf(identifier) + identifier.length;
+        html = html.substring(index, html.length); 
+        identifier = '"';
+        index = html.indexOf(identifier);
+        img = html.substring(0, index).replace("-53.jpg", "-98.jpg");
+
+        entry = new Entry(title, month, day, year,  " premiered on: ", img, "tv");
+        entries.push(entry);
+        counter++;
     }
-    data.images.forEach(function(image){
-        if(found === false && image.height >= 100){ 
-            found = true;
-        }
-    });
+    callback();
 }
 
 function genSig(api, s) {

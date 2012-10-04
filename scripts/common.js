@@ -8,13 +8,14 @@ var clientId = '696158853178.apps.googleusercontent.com';
 var apiKey = 'AIzaSyBaPMTZhvwVYcgvXbB7wIuxnIgmhA2qnYU';
 var scopes = 'https://www.googleapis.com/auth/calendar';
 
-function Entry(title, month, day, year, detail, picture){
+function Entry(title, month, day, year, detail, picture, type){
     this.month = month; 
     this.day = day;
     this.year = year;
     this.title = title;
     this.picture = picture;
     this.detail = detail;
+    this.type = type;
 }
 
 function handleClientLoad() {
@@ -107,7 +108,9 @@ function add(e){
 }
 
 function createEntry(entry, index){
-    $("#results").append('<div class=\"result\">'
+    if(entry.picture === "" )
+            entry.picture = "images/poster_default.gif";
+    $("#results").append('<div class=\"result " + entry.type + "\">'
                           +'<img src="' + entry.picture + '" />'
                           +'<h1>' + entry.title + '</h1>'
                           +'<h2 id=' + index + '> Add to calendar </h2>'
@@ -117,7 +120,9 @@ function createEntry(entry, index){
 }
 
 function createPersonal(entry){
-    $("#personal").append('<div class=\"result\">'
+    if(entry.picture === "" )
+            entry.picture = "images/poster_default.gif";
+    $("#personal").append('<div class=\"result " + entry.type + "\">'
                           +'<img src="' + entry.picture + '" />'
                           +'<h1>' + entry.title + '</h1>'
                           +'<h2> Add to calendar </h2>'
