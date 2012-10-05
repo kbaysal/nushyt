@@ -13,6 +13,7 @@ TODO:
 * Style
 * Animation/transitions -> WE NEED IDEAS!
 	- Can we animate out all the divs as they appear? We can make the <h2> tag move down when clicked? Animate between tabs?
+    - Added help box: hover on it, and it displays help text; however, need to make it so the text only appears after the box has transitioned to the new size.  Tried playing around with delays, but it wasn't working.
 
 If we had more time:
 * have a pool of keywords for each entry so that if the person says they like animations for example, we will give a list of animations

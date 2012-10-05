@@ -1,12 +1,12 @@
 <html>
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>NUSHYT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>NUSHYT</title>
 
-<style type="text/css">
-@import url("common.css");
-</style>
+    <style type="text/css">
+    @import url("common.css");
+    </style>
 
     <style type="text/css">@import "jquery.icalendar.css";</style> 
     <link href='http://fonts.googleapis.com/css?family=Crete+Round' rel='stylesheet' type='text/css'>
@@ -14,41 +14,45 @@
 </head>
 
 <body>
+    <div class="help">
+        <span class="nohover">?</span>
+        <span class="hover">Welcome to Nushyt!  Here, you can see new releases for Movies, TV, Music (including concerts and albums), and Games.  Use the search bar at the top to find new releases you may like, or just browse each category!  Click the "Add to calendar" text to add a release to your calendar.  After you're done collecting your releases, click the "Generate Calendar" button to generate a calendar with all of your selected releases!</span>
+    </div>
     <div class="top_bar">
         <div class="canvas">
             <canvas id="myCanvas" width="800" height="92">
                 No canvas available!
             </canvas>
         </div>
-    	<div class="header">
-    		nushyt
-    	</div>
-   		<ul class="tabs">
-        	<li class="nav"><a id="All" href="index.html">All</a></li>
-            <li class="nav"><a id="Movies" href="movies.html">Movies</a></li>
-            <li class="nav"><a id="TV Shows" href="tvshows.html">TV Shows</a></li>
-            <li class="nav"><a id="Music" href="music.html">Music</a></li>
-            <li class="nav"><a id="Games" href="games.html">Games</a></li>
-        </ul>
-   	</div>
-   	<div id="prefs">
-	   	<form>
-		   	<input type="text" name="likes" id="likes" placeholder="enter things you like to get personal results"><br>
-		</form>
-	</div>
-    <div id="personal">
-    </div>
-   	<div id="results">
-    </div>
+        <div class="header">
+          nushyt
+      </div>
+      <ul class="tabs">
+       <li class="nav"><a id="All" href="index.html">All</a></li>
+       <li class="nav"><a id="Movies" href="movies.html">Movies</a></li>
+       <li class="nav"><a id="TV Shows" href="tvshows.html">TV Shows</a></li>
+       <li class="nav"><a id="Music" href="music.html">Music</a></li>
+       <li class="nav"><a id="Games" href="games.html">Games</a></li>
+   </ul>
+</div>
+<div id="prefs">
+   <form>
+      <input type="text" name="likes" id="likes" placeholder="enter things you like to get personal results"><br>
+  </form>
+</div>
+<div id="personal">
+</div>
+<div id="results">
+</div>
 
-    <div id="inputs">
-        <h2>Your likes:</h2>
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="scripts/md5.js"></script>
-    <script src="scripts/common.js"></script>
-    <script src="scripts/all.js"></script>
-    <script src="scripts/canvasArtist.js"></script>
+<div id="inputs">
+    <h2>Your likes:</h2>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="scripts/md5.js"></script>
+<script src="scripts/common.js"></script>
+<script src="scripts/all.js"></script>
+<script src="scripts/canvasArtist.js"></script>
 </body>
 
 </html>

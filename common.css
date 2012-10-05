@@ -1,7 +1,61 @@
 body{
+	-webkit-text-stroke: 1px #000;
+	-moz-text-stroke: 1px #000;
 	background-color: #009e8e;
 	color: #FFF;
 	font-family: 'Crete Round', serif;
+	z-index: -1;
+}
+
+.help{
+	float:right;
+	position: fixed;
+	text-align: center;
+	padding-top: 4px;
+	vertical-align: middle;
+	font-size: 32px;
+	height:46px;
+	width:50px;
+	background-color: #FFFF47;
+	z-index: 1;
+
+	-webkit-transition: all 1s ease-in-out 0s;
+}
+
+.help:hover{
+	-webkit-transition-property: width, height, background;
+	-webkit-transition-duration: 1s, 1s, 1s;
+
+	width: 500px;
+	height: 500px;
+	background-color: blue;
+}
+
+.nohover{
+	-webkit-transition: all 1s ease-in-out 0s;
+	display: inline;
+}
+
+.help:hover .nohover{
+	-webkit-transition-property: display;
+	-webkit-transition-duration: 1s;
+	display: none;
+
+}
+
+.hover{
+	display: none;
+	-webkit-transition: all 4s ease-in-out 0s;
+}
+
+.help:hover .hover{
+	-webkit-transition-property: display, font-size, text-align;
+	-webkit-transition-duration: 1s, 1s, 1s;
+	-webkit-transition-delay: 3s, 3s, 3s;
+
+	text-align: left;
+	font-size: 20pt;
+	display:inline;
 }
 
 #mycanvas{
@@ -12,11 +66,12 @@ body{
 }
 
 .header{
+	-webkit-text-stroke: 2px #000;
+	-moz-text-stroke: 2px #000;
 	color: #FFF;
 	z-index:100;
 	font-size: 72px;
 	text-align:center;
-	-webkit-text-stroke: 2px #000;
 
 	margin-left: auto;
 	margin-right:auto;
@@ -71,10 +126,11 @@ ul{
 	text-align: center;
 	color: #043731;
 	font-family: 'Crete Round', serif;
+	-webkit-text-stroke: 0px;
+	-moz-text-stroke: 0px;
 }
 
 #inputs{
-	-webkit-text-stroke: 1px #000;
 	position: absolute;
 	top: 100px;
 	left: 10px;
