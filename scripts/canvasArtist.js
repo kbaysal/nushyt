@@ -9,6 +9,8 @@
     setFadeDrawIntervalN(delay, fadeTime/delay);
 };
 
+    
+    var imPos = 0;
 /*
  * setInterval - Wrapper function to set an interval for fading the image in over 
  * delay*repetitions milliseconds
@@ -16,14 +18,12 @@
  */
  function setFadeDrawIntervalN(delay, repetitions){
 
-    var NIMS = 8;
+    var NIMS = 800/67;
 
     var canvas = $("#myCanvas")[0];
     var cWidth = canvas.width;
     var cHeight = canvas.height;
     var ctx = canvas.getContext('2d');
-    
-    var imPos = 0;
     var currentReps = 0;
     var alpha = 0;
     var intervalID;
@@ -32,8 +32,7 @@
     var totalImgs = imgs.length;
 
     //Randomly select image to draw
-    var imgIndex = Math.floor(Math.random()*(totalImgs));
-    var img = imgs[imgIndex];
+    var img = imgs[imPos%totalImgs];
 
     if(totalImgs === 0){
         return;
@@ -46,8 +45,11 @@
         ctx.drawImage(img, imPos*cWidth/NIMS, 0, cWidth/NIMS, cHeight);
 
         alpha = alpha + 1/(repetitions);
-        if(++currentReps >= repetitions){
+        if(++currentReps > repetitions){
             clearInterval(intervalID);
-            imPos = (imPos+1)%NIMS;
+            if(imPos < totalImgs-1)
+                imPos = (imPos+1)%NIMS;
+            else
+                imPos = 0;
         }}, delay);
 }

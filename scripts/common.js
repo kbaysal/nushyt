@@ -291,11 +291,11 @@ function games(){
 }
 
 $(document).ready(function() {
-    var addButton = document.getElementById("all").addEventListener('click', all, false);
-    var addButton = document.getElementById("movies").addEventListener('click', movies, false);
-    var addButton = document.getElementById("tv").addEventListener('click', tv, false);
-    var addButton = document.getElementById("music").addEventListener('click', music, false);
-    var addButton = document.getElementById("games").addEventListener('click', games, false);
+    var all = document.getElementById("all").addEventListener('click', all, false);
+    var movies = document.getElementById("movies").addEventListener('click', movies, false);
+    var tv = document.getElementById("tv").addEventListener('click', tv, false);
+    var music = document.getElementById("music").addEventListener('click', music, false);
+    var games = document.getElementById("games").addEventListener('click', games, false);
     setInterval(function(){drawBanner()}, 3000);
 });
 
