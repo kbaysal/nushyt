@@ -1,49 +1,60 @@
+//Holds the index to be drawn at the next interval; way to make non-global?
+var imPos = 0;
+//Number of images to display in the banner
+var NIMS = 8;
+// TODO: Other globals: I don't want to get these in each call to fadeDraw, but I can't
+// think of a better way than globals for them to persist
+var canvas = $("#myCanvas")[0];
+var cWidth = canvas.width;
+var cHeight = canvas.height;
+var ctx = canvas.getContext('2d');
+
 /*
  * drawBanner - Takes the images from the current page and draws them on the canvas.
  * TODO - Randomize more, remove deadcode before submission
-*/
+ */
 
-function drawBanner(){
-	var canvas = $("#myCanvas")[0];
-	var cWidth = canvas.width;
-	var cHeight = canvas.height;
-	//Number of images to display in the banner
-	var nIms = 8;
-	var pos = 0;
-	var ctx = canvas.getContext('2d');
-	var imgs = $("img");
-	var totalImgs = imgs.length;
-
-	//Randomly select and draw images
-	for(var i = 0; i < nIms; i++){
-		var imgIndex = Math.floor(Math.random()*(imgs.length));
-		ctx.drawImage(imgs[imgIndex], i*cWidth/nIms, 0, cWidth/nIms, cHeight);
-	}
-
-	/*$.each(imgs, function(i, img){
-		pos = i%(nIms);
-		ctx.drawImage(img, pos*cWidth/nIms,0, cWidth/nIms, cHeight);
-	});*/
-
-	/*var img = new Image();
-	img.src = 'testimages/jiggs2.jpg';
-	img.onload = function(){
-		alert(img.width);
-		ctx.drawImage(img,0,0);
-		alert(img.width);
-	}*/
+ function drawBanner(){
+    var delay = 60;
+    var fadeTime = 3000;
+    setIntervalN(fadeDraw, delay, fadeTime/delay);
 };
 
-/*function draw() {
-  var img = new Image();
-  img.src = './images/backdrop.png';
-  img.onload = function(){
-    ctx.drawImage(img,0,0, 400,400);
-    ctx.beginPath();
-    ctx.moveTo(30,96);
-    ctx.lineTo(70,66);
-    ctx.lineTo(103,76);
-    ctx.lineTo(170,15);
-    ctx.stroke();
-  }
-}*/
+/*
+ * setInterval - Wrapper function to set an interval for fading the image in over 
+ * delay*repetitions milliseconds
+ * adapted from: http://stackoverflow.com/questions/2956966/javascript-telling-setinterval-to-only-fire-x-amount-of-times
+ */
+ function setIntervalN(callback, delay, repetitions){
+    var currentReps = 0;
+    var alpha = 0;
+    var intervalID;
+
+    var imgs = $(".liked");
+    var totalImgs = imgs.length;
+    //Randomly select image to draw
+    var imgIndex = Math.floor(Math.random()*(totalImgs));
+    var img = imgs[imgIndex];
+
+    if(totalImgs === 0){
+        return;
+    }
+
+    intervalID = setInterval(function(){
+        callback(alpha, img);
+        alpha = alpha + 1/(repetitions);
+        if(++currentReps >= repetitions){
+            clearInterval(intervalID);
+            imPos = (imPos+1)%NIMS;
+        }}, delay);
+}
+
+/*
+ * fadeDraw - Function to draw the image at the given opacity
+ */
+ function fadeDraw(alpha, img){
+
+    ctx.globalAlpha = alpha;
+    ctx.drawImage(img, imPos*cWidth/NIMS, 0, cWidth/NIMS, cHeight);
+
+}

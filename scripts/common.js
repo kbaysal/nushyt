@@ -1,7 +1,6 @@
 var likes = [];
 var inputs = [];
 var entries = [];
-var images = [];
 var toAdd = [];
 var added = [];
 
@@ -128,8 +127,13 @@ function entryCompare(e1, e2){
     else return -1;
 }
 
+/*
+ * add - event handler to add a selection to the user's calendar
+*/
 function add(e){
     var index = e.target.getAttribute("id");
+    var JQtarget = $(e.target);
+    JQtarget.parent().find("img").attr("class", "liked");
     var entry = entries[index];
     if (!(containsEntry(toAdd, entry) || containsEntry(added, entry))) {
         toAdd.push(entry);
@@ -149,7 +153,6 @@ function createEntry(entry, index){
                           +'<h3>' + entry.detail + entry.month + "/" + entry.day + "/" + entry.year + '</h1>'
                           +'</div>');
     var addButton = document.getElementById(index).addEventListener('click', add, false);
-    drawBanner();
 }
 
 function createPersonal(entry){
@@ -241,6 +244,7 @@ $(document).ready(function() {
     inputs.forEach(function(input){
         $('#inputs').append('<h3>' + input['Name'] + '</h3>')
     });
+    setInterval(function(){drawBanner()}, 3000);
 });
 
 

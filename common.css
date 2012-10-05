@@ -16,7 +16,7 @@ body{
 	z-index:100;
 	font-size: 72px;
 	text-align:center;
-	-webkit-text-stroke: 1px #000;
+	-webkit-text-stroke: 2px #000;
 
 	margin-left: auto;
 	margin-right:auto;
