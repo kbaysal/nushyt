@@ -239,6 +239,10 @@ function likesCallback(data){
 function callback(){
     console.log("******************callback***********************");
     entries = entries.sort(entryCompare);
+    all();
+}
+
+function all(){
     var count = 0;
     entries.forEach(function(entry) {
         createEntry(entry, count);
@@ -246,10 +250,52 @@ function callback(){
     });
 }
 
-$(document).ready(function() {
-    inputs.forEach(function(input){
-        $('#inputs').append('<h3>' + input['Name'] + '</h3>')
+function movies(){
+    $("#results"). empty();
+    var count = 0;
+    entries.forEach(function(entry) {
+        if(entry.type === "movie")
+            createEntry(entry, count);
+        count++;
     });
+}
+
+function tv(){
+    $("#results"). empty();
+    var count = 0;
+    entries.forEach(function(entry) {
+        if(entry.type === "tv")
+            createEntry(entry, count);
+        count++;
+    });
+}
+
+function music(){
+    $("#results"). empty();
+    var count = 0;
+    entries.forEach(function(entry) {
+        if(entry.type === "music")
+            createEntry(entry, count);
+        count++;
+    });
+}
+
+function games(){
+    $("#results"). empty();
+    var count = 0;
+    entries.forEach(function(entry) {
+        if(entry.type === "game")
+            createEntry(entry, count);
+        count++;
+    });
+}
+
+$(document).ready(function() {
+    var addButton = document.getElementById("all").addEventListener('click', all, false);
+    var addButton = document.getElementById("movies").addEventListener('click', movies, false);
+    var addButton = document.getElementById("tv").addEventListener('click', tv, false);
+    var addButton = document.getElementById("music").addEventListener('click', music, false);
+    var addButton = document.getElementById("games").addEventListener('click', games, false);
     setInterval(function(){drawBanner()}, 3000);
 });
 

@@ -95,10 +95,11 @@ ul{
 	top:-20px;
 }
 
-.nav a{
+ul div{
 	float:left;
 	margin-left: 50px;
 	color: #043731;
+	display: inline;
 }
 .nav a:link {
 	text-decoration: none;
@@ -178,7 +179,7 @@ ul{
 	box-shadow:    0px 1px  5px 2px #043731;
 }
 
-#results .result:hover{
+#results .result:active{
 	position: relative;
     top: 2px;
 	-moz-box-shadow:    0px 1px  3px 0px #043731;
