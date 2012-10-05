@@ -111,6 +111,11 @@ function populateNushytCalendar() {
 }
 
 function entryCompare(e1, e2){
+    if (e1.month === "TBD")
+        return 1;
+    else if (e2.month === "TBD")
+        return -1;
+  
   //e1 and e2 need to be Entry objects
     if(e1.year > e2.year)
         return 1;
@@ -146,7 +151,7 @@ function add(e){
 function createEntry(entry, index){
     if(entry.picture === "" )
             entry.picture = "images/poster_default.gif";
-    $("#results").append('<div class=\"result " + entry.type + "\">'
+    $("#results").append('<div class=\"result ' + entry.type + '\">'
                           +'<img src="' + entry.picture + '" />'
                           +'<h1>' + entry.title + '</h1>'
                           +'<h2 id=' + index + '> Add to calendar </h2>'
@@ -158,7 +163,7 @@ function createEntry(entry, index){
 function createPersonal(entry){
     if(entry.picture === "" )
             entry.picture = "images/poster_default.gif";
-    $("#personal").append('<div class=\"result " + entry.type + "\">'
+    $("#personal").append('<div class=\"result ' + entry.type + '\">'
                           +'<img src="' + entry.picture + '" />'
                           +'<h1>' + entry.title + '</h1>'
                           +'<h2> Add to calendar </h2>'
@@ -232,6 +237,7 @@ function likesCallback(data){
 
 
 function callback(){
+    console.log("******************callback***********************");
     entries = entries.sort(entryCompare);
     var count = 0;
     entries.forEach(function(entry) {

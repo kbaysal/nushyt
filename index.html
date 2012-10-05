@@ -8,7 +8,6 @@
     @import url("common.css");
     </style>
 
-    <style type="text/css">@import "jquery.icalendar.css";</style> 
     <link href='http://fonts.googleapis.com/css?family=Crete+Round' rel='stylesheet' type='text/css'>
 
 </head>
@@ -25,34 +24,36 @@
             </canvas>
         </div>
         <div class="header">
-          nushyt
-      </div>
-      <ul class="tabs">
-       <li class="nav"><a id="All" href="index.html">All</a></li>
-       <li class="nav"><a id="Movies" href="movies.html">Movies</a></li>
-       <li class="nav"><a id="TV Shows" href="tvshows.html">TV Shows</a></li>
-       <li class="nav"><a id="Music" href="music.html">Music</a></li>
-       <li class="nav"><a id="Games" href="games.html">Games</a></li>
-   </ul>
-</div>
-<div id="prefs">
-   <form>
-      <input type="text" name="likes" id="likes" placeholder="enter things you like to get personal results"><br>
-  </form>
-</div>
-<div id="personal">
-</div>
-<div id="results">
-</div>
+            nushyt
+        </div>
+        <ul class="tabs">
+            <li class="nav"><a id="All" href="index.html">All</a></li>
+            <li class="nav"><a id="Movies" href="movies.html">Movies</a></li>
+            <li class="nav"><a id="TV Shows" href="tvshows.html">TV Shows</a></li>
+            <li class="nav"><a id="Music" href="music.html">Music</a></li>
+            <li class="nav"><a id="Games" href="games.html">Games</a></li>
+            <li class="nav"><button onclick="authorize();" id="googleButton">Calendar</button></li>
+        </ul>
+    </div>
+    <div id="prefs">
+       <form>
+        <input type="text" name="likes" id="likes" placeholder="enter things you like to get personal results"><br>
+      </form>
+    </div>
+    <div id="personal">
+    </div>
+    <div id="results">
+    </div>
 
-<div id="inputs">
-    <h2>Your likes:</h2>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="scripts/md5.js"></script>
-<script src="scripts/common.js"></script>
-<script src="scripts/all.js"></script>
-<script src="scripts/canvasArtist.js"></script>
+    <div id="inputs">
+        <h2>Your likes:</h2>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+        <script src="https://apis.google.com/js/client.js"></script>
+    <script type="text/javascript" src="scripts/md5.js"></script>
+    <script src="scripts/common.js"></script>
+    <script src="scripts/all.js"></script>
+    <script src="scripts/canvasArtist.js"></script>
 </body>
 
 </html>

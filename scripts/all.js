@@ -1,5 +1,8 @@
 var count = 0;
-var totalCalls = 3;
+var totalCalls = 6;
+
+var songKickApiKey;
+var songKickBaseUrl;
 
 $(document).ready(function() {
     var apikey = "2n2jcb9yw5a9qat694epm3qf";
@@ -60,6 +63,17 @@ $(document).ready(function() {
         dataType: "jsonp",
         success: gameCallback
     });
+
+    songKickApiKey = "AVNqr7bkPoxHFdu3";
+    songKickBaseUrl = "http://api.songkick.com/api/3.0";
+
+    var locationSearchUrl = songKickBaseUrl + "/search/locations.json?location=clientip&apikey=" + songKickApiKey + "&jsoncallback=areaSearchCallback";
+    console.log(locationSearchUrl);
+    $.ajax ({
+        url: locationSearchUrl,
+        dataType: "jsonp",
+        success: areaSearchCallback
+    });
 });
  
 // callback for when we get back the results
@@ -71,10 +85,11 @@ function theaterCallback(data) {
         day = date[2];
         month = date[1];
         year = date[0];
-        entry = new Entry(movie.title, month, day, year, "In Theaters: ", movie.posters.thumbnail);
+        entry = new Entry(movie.title, month, day, year, "In Theaters: ", movie.posters.thumbnail, "movie");
         entries.push(entry);
     });
     count++;
+    console.log("theater: " + count);
     if(count==totalCalls){
         callback();
     }
@@ -88,10 +103,11 @@ function dvdCallback(data) {
         day = date[2];
         month = date[1];
         year = date[0];
-        entry = new Entry(movie.title, month, day, year, "On DVD: ", movie.posters.thumbnail);
+        entry = new Entry(movie.title, month, day, year, "On DVD: ", movie.posters.thumbnail, "movie");
         entries.push(entry)
     });
     count++;
+    console.log("dvd: " + count);
     if(count==totalCalls){
         callback();
     }
@@ -153,6 +169,7 @@ function tvCallback(data) {
         counter++;
     }
     count++;
+    console.log("tv: " + count);
     if(count==totalCalls){
         callback();
     }
@@ -231,7 +248,11 @@ function gameCallback(data) {
         entries.push(entry);
         counter++;
     }
-    callback();
+    count++;
+    console.log("game: " + count);
+    if(count==totalCalls){
+        callback();
+    }
 }
 
 
@@ -266,8 +287,12 @@ function albumCallback(data) {
 function imageCallback(data){
     var found = false;
     imageCount++;
-    if(imageCount === albumNum){
-        callback();
+    if(imageCount === albumNum){ 
+        count++;
+        console.log("album: " + count);
+        if(count==totalCalls){
+            callback();
+        }
     }
     else if(data.album !== undefined){
         data.album.image.forEach(function(image){
@@ -280,6 +305,61 @@ function imageCallback(data){
                 });
             }
         });
+    }
+}
+
+var locationCount;
+
+function areaSearchCallback(data) {
+    var locations = data.resultsPage.results.location;
+    var numLocations = Math.min(3, locations.length);
+    locationCount = numLocations;
+    var entry;
+    for (var i = numLocations - 1; i >= 0; i--) {
+        var location = locations[i];
+        var metroAreaId = location.metroArea.id;
+        var upcomingEventsUrl = songKickBaseUrl + "/metro_areas/" + metroAreaId + "/calendar.json?apikey=" + songKickApiKey + "&jsoncallback=concertCallback";
+        console.log(upcomingEventsUrl);
+        $.ajax({
+            url: upcomingEventsUrl,
+            dataType: "jsonp",
+            success: concertCallback
+        });
+
+    }
+}
+
+function concertCallback(data) {
+    var events = data.resultsPage.results.event;
+    var title, venue, date, month, day, year, detail, entry;
+    var type = "music";
+    if (events != undefined) {
+        events.forEach(function(event) {
+            var dateString;
+            if (undefined === event.start.datetime) {
+                dateString = event.start.datetime
+            }
+            else {
+                dateString = event.start.date + "T00:00:00-0500"
+            }
+            date = new Date(dateString);
+            title = event.displayName;
+            venue = event.venue.displayName;
+            month = date.getMonth(); 
+            day = date.getDate();
+            year = date.getFullYear();
+            detail = "performing at " + venue + ": ";
+            entry = new Entry(title, month + 1, day, year, detail, "", type);
+            entries.push(entry);
+        });
+    }
+    locationCount--;
+    if (locationCount == 0) {
+        count++;
+        console.log("concert: " + count);
+        if(count==totalCalls){
+            callback();
+        }
     }
 }
 
