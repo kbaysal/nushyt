@@ -2,15 +2,18 @@
  * drawBanner - Takes the images from the current page and draws them on the canvas.
  * TODO - Randomize more, remove deadcode before submission
  */
+    var imPos = 0;
+    var imInd = 0;
 
  function drawBanner(){
     var delay = 60;
     var fadeTime = 3000;
     setFadeDrawIntervalN(delay, fadeTime/delay);
+    console.log(imPos +", " + imInd);
 };
 
     
-    var imPos = 0;
+
 /*
  * setInterval - Wrapper function to set an interval for fading the image in over 
  * delay*repetitions milliseconds
@@ -18,7 +21,7 @@
  */
  function setFadeDrawIntervalN(delay, repetitions){
 
-    var NIMS = 800/67;
+    var NIMS = Math.ceil(800/67);
 
     var canvas = $("#myCanvas")[0];
     var cWidth = canvas.width;
@@ -32,7 +35,7 @@
     var totalImgs = imgs.length;
 
     //Randomly select image to draw
-    var img = imgs[imPos%totalImgs];
+    var img = imgs[imInd];
 
     if(totalImgs === 0){
         return;
@@ -47,6 +50,7 @@
         alpha = alpha + 1/(repetitions);
         if(++currentReps > repetitions){
             clearInterval(intervalID);
+            imInd = (imInd + 1)%totalImgs;
             if(imPos < totalImgs-1)
                 imPos = (imPos+1)%NIMS;
             else
