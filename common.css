@@ -1,6 +1,4 @@
 body{
-	-webkit-text-stroke: 1px #000;
-	-moz-text-stroke: 1px #000;
 	background-image: url('./images/noisy_grid.png');
 	color: #FFF;
 	font-family: 'Crete Round', serif;
