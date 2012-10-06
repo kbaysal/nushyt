@@ -2,7 +2,6 @@ var likes = [];
 var inputs = [];
 var entries = [];
 var toAdd = [];
-var added = [];
 
 var clientId = '696158853178.apps.googleusercontent.com';
 var apiKey = 'AIzaSyBaPMTZhvwVYcgvXbB7wIuxnIgmhA2qnYU';
@@ -54,7 +53,7 @@ function createNushytCalendar() {
         });
         request.execute(parseList);
     } else {
-        populateCalendar();
+        populateNushytCalendar();
     }
 }
 
@@ -86,28 +85,54 @@ function createNewCalendar() {
     });
 }
 
-function populateNushytCalendar() {
-    toAdd.forEach(function(entry) {
-        var request = gapi.client.calendar.events.insert({
-            'calendarId': nushytCalId,
-            'resource': {
-                'summary': entry.title,
-                'start': {
-                    'date': entry.year + "-" + entry.month + "-" + entry.day
-                },
-                'end': {
-                    'date': entry.year + "-" + entry.month + "-" + entry.day
-                },
-                "reminders": {
-                    "useDefaults": true
-                }
-            }
-        });
-        request.execute(function() {
-            added.push(entry);
-        });
+function parseEventListResponse(response) {
+    if (response.items === undefined)
+        return;
+    response.items.forEach(function(item) {
+        var date = new Date(item.start.date);
+        console.log(date + ': ' + date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear());
+        var entry = new Entry(item.summary, date.getMonth() + 1, date.getDate(), date.getFullYear(), "", "", "");
+        removeEntry(toAdd, entry)
     });
-    toAdd = [];
+    if (response.nextPageToken !== undefined) {
+        var request = gapi.client.events.list({
+            'calendarId': nushytCalId,
+            'pageToken': response.nextPageToken
+        });
+        request.execute(function(response) {
+            parseEventListResponse(response);
+        });
+    } else {
+        toAdd.forEach(function(entry) {
+            var request = gapi.client.calendar.events.insert({
+                'calendarId': nushytCalId,
+                'resource': {
+                    'summary': entry.title,
+                    'start': {
+                        'date': entry.year + "-" + entry.month + "-" + entry.day
+                    },
+                    'end': {
+                        'date': entry.year + "-" + entry.month + "-" + entry.day
+                    },
+                    "reminders": {
+                        "useDefaults": true
+                    }
+                }
+            });
+            request.execute(function() {
+            });
+        });
+        toAdd = [];
+    }
+}
+
+function populateNushytCalendar() {
+    var request = gapi.client.calendar.events.list({
+        'calendarId': nushytCalId
+    });
+    request.execute(function(response) {
+        parseEventListResponse(response);
+    });
 }
 
 function entryCompare(e1, e2){
@@ -139,8 +164,13 @@ function add(e){
     var index = e.target.getAttribute("id");
     var JQtarget = $(e.target);
     JQtarget.parent().find("img").attr("class", "liked");
-    var entry = entries[index];
-    if (!(containsEntry(toAdd, entry) || containsEntry(added, entry))) {
+    var entry;
+    if (index >= entries.length) {
+        entry = likes[index - entries.length];
+    } else {
+        entry = entries[index];
+    }
+    if (!containsEntry(toAdd, entry)) {
         toAdd.push(entry);
         console.log("added event " + entry.title);
     } else {
@@ -160,15 +190,16 @@ function createEntry(entry, index){
     var addButton = document.getElementById(index).addEventListener('click', add, false);
 }
 
-function createPersonal(entry){
+function createPersonal(entry, index){
     if(entry.picture === "" )
             entry.picture = "images/poster_default.gif";
     $("#personal").append('<div class=\"result ' + entry.type + '\">'
                           +'<img src="' + entry.picture + '" />'
                           +'<h1>' + entry.title + '</h1>'
-                          +'<h2> Add to calendar </h2>'
+                          +'<h2 id=' + index + '> Add to calendar </h2>'
                           +'<h3>' + entry.detail + entry.month + "/" + entry.day + "/" + entry.year + '</h1>'
                           +'</div>');
+    var addButton = document.getElementById(index).addEventListener('click', add, false);
 }
 
 function contains(array, title){
@@ -183,10 +214,22 @@ function contains(array, title){
 function containsEntry(array, entry) {
     var match = false;
     array.forEach(function(element) {
-        if (entry.title === element.title)
+        if (entry.title === element.title &&
+            entry.year === element.year &&
+            entry.month === element.month &&
+            entry.date === element.date)
             match = true;
     });
     return match;
+}
+
+function removeEntry(array, entry) {
+    for (var i = array.length - 1; i >= 0; i--) {
+        var element = array[i];
+        if (entry.title === element.title) {
+            array.splice(i, 1);
+        }
+    }
 }
 
 var baseUrl = "http://www.tastekid.com/ask/ws?q=";
@@ -220,10 +263,11 @@ function likesCallback(data){
         });
 
         $("#personal").empty();
+        count = entries.length;
         entries.forEach(function(entry){
             likes.forEach(function(like){
                 if(entry['title'].toLowerCase() === like['Name'].toLowerCase()){
-                    createPersonal(entry);
+                    createPersonal(entry, count);
                 }
             });
         });

@@ -309,6 +309,7 @@ function imageCallback(data){
 }
 
 var locationCount;
+var concertCount = 0;
 
 function areaSearchCallback(data) {
     var locations = data.resultsPage.results.location;
@@ -335,6 +336,7 @@ function concertCallback(data) {
     var type = "music";
     var imageSearchBaseUrl = "http://developer.echonest.com/api/v4/artist/images?format=jsonp&results=1&start=0&api_key=UIZAIQEXG9AJYDRUN&id=songkick:artist:";
     if (events != undefined) {
+        concertCount += events.length;
         events.forEach(function(event) {
             var dateString;
             if (undefined === event.start.datetime) {
@@ -363,10 +365,10 @@ function concertCallback(data) {
         });
     }
     locationCount--;
-    if (locationCount == 0) {
+    if (locationCount == 0 && concertCount == 0) {
         count++;
         console.log("concert: " + count);
-        if(count==totalCalls){
+        if(count == totalCalls){
             callback();
         }
     }
@@ -380,6 +382,14 @@ function createImageCallback(id) {
             entries[id].picture = imgUrl;
         }
         delete window[functionName];
+        concertCount--;
+        if (locationCount == 0 && concertCount == 0) {
+            count++;
+            console.log("concert: " + count);
+            if(count == totalCalls){
+                callback();
+            }
+        }
     }
     return functionName;
 }
