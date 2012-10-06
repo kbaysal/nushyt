@@ -160,14 +160,12 @@ function entryCompare(e1, e2){
  * add - event handler to add a selection to the user's calendar
 */
 function add(e){
-<<<<<<< HEAD
     var index = e.getAttribute("id");
     e.getElementsByTagName("img")[0].setAttribute("class", "liked");
-=======
-    var JQtarget = $(e.target);
-    var index = e.target.parentNode.parentNode.getAttribute("id");
-    JQtarget.parent().find("img").toggleClass("liked");
->>>>>>> Canvas
+// =======
+//     var JQtarget = $(e.target);
+//     var index = e.target.parentNode.parentNode.getAttribute("id");
+//     JQtarget.parent().find("img").toggleClass("liked");
     var entry;
     if (index >= entries.length) {
         entry = likes[index - entries.length];
