@@ -340,12 +340,11 @@ function concertCallback(data) {
             year = date.getFullYear();
             detail = "performing at " + venue + ": ";
             entry = new Entry(title, month + 1, day, year, detail, "", type);
-            var callback = createImageCallback(entries.length);
             var url = imageSearchBaseUrl + event.performance[0].artist.id;
             $.ajax({
                 url: url,
                 dataType: "jsonp",
-                jsoncallback: callback,
+                jsonpCallback: createImageCallback(entries.length),
                 success: window[callback]
             });
             entries.push(entry);
