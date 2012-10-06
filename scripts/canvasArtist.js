@@ -22,11 +22,11 @@
 
     
 
-    var canvas = $("#myCanvas")[0];
-    var cWidth = canvas.width;
-    var cHeight = canvas.height;
+    var canvas = $("#myCanvas");
+    var cWidth = canvas.css("width");
+    var cHeight = canvas.css("height");
     var POSTER_HEIGHT = 67;
-    var ctx = canvas.getContext('2d');
+    var ctx = canvas[0].getContext('2d');
     var currentReps = 0;
     var alpha = 0;
     var intervalID;
@@ -43,7 +43,6 @@
     }
 
     intervalID = setInterval(function(){
-
 
         ctx.globalAlpha = alpha;
         ctx.drawImage(img, imPos*cWidth/NIMS, 0, cWidth/NIMS, cHeight);
