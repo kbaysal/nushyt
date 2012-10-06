@@ -20,8 +20,6 @@
  */
  function setFadeDrawIntervalN(delay, repetitions){
 
-    
-
     var canvas = $("#myCanvas");
     var cWidth = canvas.css("width");
     var cHeight = canvas.css("height");
@@ -38,7 +36,7 @@
     //Randomly select image to draw
     var img = imgs[imInd];
 
-    if(totalImgs === 0){
+    if(totalImgs === 0 || $(img).attr("src") === ""){
         return;
     }
 

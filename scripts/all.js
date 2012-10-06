@@ -403,14 +403,20 @@ function concertCallback(data) {
             //http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=Cher&api_key=b25b959554ed76058ac220b7b2e0a026&format=json&callback=hello
             var url = imageSearchBaseUrl + event.performance[0].artist.id;
             var callback = createImageCallback(entries.length);
+            entries.push(entry);
             $.ajax({
                 url: url,
                 dataType: "jsonp",
                 jsonpCallback: callback,
+                timeout: 5000,
                 success: window[callback],
-                error: processedConcert(callback)
+                error: function() {
+                },
+                complete: function() {
+                    console.log(callback);
+                    processedConcert(callback);
+                }
             });
-            entries.push(entry);
         });
     }
     locationCount--;
@@ -424,12 +430,12 @@ function concertCallback(data) {
 
 function createImageCallback(id) {
     var functionName = "imageCallback_" + id
+    var errorName = functionName + "_error";
     window[functionName] = function(data) {
         if (data.response.images !== undefined && data.response.images[0] !== undefined) {
             var imgUrl = data.response.images[0].url;
             entries[id].picture = imgUrl;
         }
-        processedConcert(functionName);
     }
     return functionName;
 }
