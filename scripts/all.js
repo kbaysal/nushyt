@@ -53,6 +53,7 @@ $(document).ready(function() {
 
     var gameUrl = 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2Fwww.gamefly.com%2Fbuy-games%2FBrowse%2F%3Fcat%3DComingSoon%26page%3D1%26pageSize%3D48%22&format=xml&diagnostics=true&callback=gameCallback';
 
+    console.log(gameUrl);
 
     $.ajax({
         url: gameUrl,
@@ -65,12 +66,71 @@ $(document).ready(function() {
 
     var locationSearchUrl = songKickBaseUrl + "/search/locations.json?location=clientip&apikey=" + songKickApiKey + "&jsoncallback=areaSearchCallback";
 
+    getLocation();
+/*
     $.ajax ({
         url: locationSearchUrl,
         dataType: "jsonp",
         success: areaSearchCallback
-    });
+    });*/
 });
+
+function getLocation()
+  {
+  if (navigator.geolocation)
+    {
+    navigator.geolocation.getCurrentPosition(showPosition);
+    }
+  else{showPosition();}
+  }
+function showPosition(position)
+{
+    var baseUrl = "http://ws.audioscrobbler.com/2.0/?method=geo.getevents&api_key=b25b959554ed76058ac220b7b2e0a026&format=json&callback=conCallback"
+    var city, lng, lat;
+    if(position){
+        baseUrl += "distance=40&long=" + position.longitude + "lat=" + position.latitude;
+    }
+    else{
+        baseUrl += "location=Pittsburgh"
+    }
+    $.ajax ({
+        url: baseUrl,
+        dataType: "jsonp",
+        success: conCallback
+    });
+}
+
+function conCallback(data) {
+    var events = data.events;
+    var entry, day, month, year, date, img, images;
+    $.each(events.event, function(index, event){
+        img = "";
+        date = event.startDate.split(" ");
+        day = date[1];
+        month = 10;
+        year = date[3];
+        images = event.image;
+        img = images[0]['#text'];
+        images.forEach(function(image){
+            if(image.size=="large")
+                img = image['#text'];
+        });
+        if(img === ""){
+            images = event.venue.image;
+            img = images[0]['#text'];
+            images.forEach(function(image){
+            if(image.size=="large")
+                img = image['#text'];
+            });
+        }
+        entry = new Entry(event.title, month, day, year, "performing at - " + event.venue.name+":", img, "music");
+        entries.push(entry);
+    });  
+    count++;
+    if(count==totalCalls){
+        callback();
+    }
+}
  
 // callback for when we get back the results
 function theaterCallback(data) {
@@ -178,7 +238,7 @@ function gameCallback(data) {
     var counter = 0;
     
 
-    while(counter<31){
+    while(counter<29){
         //get title
         var identifier = '<img alt="Buy >';
         index = html.indexOf(identifier) + identifier.length;
@@ -340,6 +400,7 @@ function concertCallback(data) {
             year = date.getFullYear();
             detail = "performing at " + venue + ": ";
             entry = new Entry(title, month + 1, day, year, detail, "", type);
+            //http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=Cher&api_key=b25b959554ed76058ac220b7b2e0a026&format=json&callback=hello
             var url = imageSearchBaseUrl + event.performance[0].artist.id;
             var callback = createImageCallback(entries.length);
             $.ajax({

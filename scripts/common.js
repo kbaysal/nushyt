@@ -172,9 +172,14 @@ function add(e){
     }
     if (!containsEntry(toAdd, entry)) {
         toAdd.push(entry);
+        e.target.parentNode.parentNode.getElementsByTagName("h2")[0].innerHTML = "Remove <br> from <br> calendar";
         console.log("added event " + entry.title);
+        e.target.parentNode.className += "show";
     } else {
-        console.log(entry.title + " has already been added.");
+        removeEntry(toAdd, entry);
+        e.target.parentNode.parentNode.getElementsByTagName("h2")[0].innerHTML = "Add <br> to <br> calendar";
+        console.log("removed event" + entry.title);
+        e.target.parentNode.className = "inner four columns ";
     }
 }
 
@@ -190,11 +195,15 @@ function hide(e){
     JQtarget.find("h2").css("visibility", "hidden") ;
 }
 function createEntry(entry, index){
-    $("#results").append('<div class=\"result four columns ' + entry.type + '\" id=\"' + index +  '\">'
+    
+    var date = entry.month + "/" + entry.day + "/" + entry.year;
+    if(entry.month == "TBD"){
+        var date = "TBD"
+    }$("#results").append('<div class=\"result four columns ' + entry.type + '\" id=\"' + index +  '\">'
                           +'<div class=\"inner four columns \">'
                           +'<h1>' + entry.title + '</h1>'
                           +'<h2> Add <br> to <br> calendar </h2>'
-                          +'<h3>' + entry.detail + entry.month + "/" + entry.day + "/" + entry.year + '</h1>'
+                          +'<h3>' + entry.detail + date + '</h1>'
                           +'<img src="' + entry.picture + '" />'
                           +'</div>'
                           +'</div>');
@@ -208,13 +217,15 @@ function createEntry(entry, index){
 }
 
 function createPersonal(entry, index){
-    if(entry.picture === "" )
-            entry.picture = "images/poster_default.gif";
+    var date = entry.month + "/" + entry.day + "/" + entry.year;
+    if(entry.month == "TBD"){
+        var date = "TBD"
+    }
     $("#personal").append('<div class=\"result four columns ' + entry.type + '\" id=\"' + index +  '\">'
                           +'<div class=\"inner four columns \">'
                           +'<h1>' + entry.title + '</h1>'
                           +'<h2> Add <br> to <br> calendar </h2>'
-                          +'<h3>' + entry.detail + entry.month + "/" + entry.day + "/" + entry.year + '</h1>'
+                          +'<h3>' + entry.detail + date + '</h1>'
                           +'<img src="' + entry.picture + '" />'
                           +'</div>'
                           +'</div>');
@@ -222,6 +233,10 @@ function createPersonal(entry, index){
     var addButton = document.getElementById(index).addEventListener('mouseenter', reveal, false);
     var addButton = document.getElementById(index).addEventListener('mouseleave', hide, false);
     document.getElementById(index).style.backgroundImage = "url("+entry.picture+")";
+
+    if(entry.picture !== "" )
+        document.getElementById(index).style.backgroundImage = "url("+entry.picture+")";
+ 
 }
 
 function contains(array, title){
@@ -298,16 +313,11 @@ function likesCallback(data){
             });
         });
     }
-    else{
-
-    }
-    console.log(inputs);
 }
 
 
 
 function callback(){
-    console.log("******************callback***********************");
     entries = entries.sort(entryCompare);
     all();
 }

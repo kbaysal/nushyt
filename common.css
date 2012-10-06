@@ -209,6 +209,12 @@ ul div{
 	background-color: rgba(0, 0, 0, 0.5);
 }
 
+.show{
+    background-repeat: no-repeat;
+	background-image: url("./images/star.png");
+	background-position: right bottom;
+}
+
 .result img{
 	position: relative;
 	top: 0px;
@@ -221,13 +227,13 @@ ul div{
 	position: relative;
 	top: 10px;
 	overflow: hidden;
-	height:45px;
+	height:40px;
 	width:650px;
 }
 .result h2{
 	font-size: 40px;
 	position: relative;
-	top: -45px;
+	top: -40px;
 	padding-top: 15px;
 	height: 135px;
 	color: white;
@@ -244,5 +250,13 @@ ul div{
 
 .result img{
 	visibility: hidden;
+}
+
+.star{
+	height: 30px;
+	width:30px;
+	position: relative;
+	top:120px;
+	right: 0px;
 }
 
