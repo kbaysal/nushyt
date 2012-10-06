@@ -261,6 +261,7 @@ function removeEntry(array, entry) {
 }
 
 function onSubmit(){
+    document.getElementById("personal").style.display = "block";
     var baseUrl = "http://www.tastekid.com/ask/ws?q=";
     var likesUrl = baseUrl+document.getElementById('likes').value+"&f=nushyt4577&k=nznkmjqxm2e0&verbose=1&format=JSON&jsonp=likesCallback";
     $.ajax({
@@ -315,6 +316,8 @@ function callback(){
     });
 }
 
+var color;
+
 function all(){
     var count = 0;
     var items = document.getElementsByClassName("result");
@@ -325,7 +328,8 @@ function all(){
     for(var i = 0; i<tabs.length; i++){
         tabs[i].style.backgroundColor = "#043731";
     }
-    document.getElementById("all").style.backgroundColor = "#34C6CD"
+    document.getElementById("all").style.backgroundColor = "#34C6CD";
+    color = "#34C6CD";
 }
 
 function movies(){
@@ -343,7 +347,8 @@ function movies(){
     for(var i = 0; i<tabs.length; i++){
         tabs[i].style.backgroundColor = "#043731";
     }
-    document.getElementById("movies").style.backgroundColor = "#34C6CD"
+    document.getElementById("movies").style.backgroundColor = "#34C6CD";
+    color = "#34C6CD";
 }
 
 function tv(){
@@ -361,7 +366,8 @@ function tv(){
     for(var i = 0; i<tabs.length; i++){
         tabs[i].style.backgroundColor = "#043731";
     }
-    document.getElementById("tv").style.backgroundColor = "#34C6CD"
+    document.getElementById("tv").style.backgroundColor = "#34C6CD";
+    color = "#34C6CD";
 }
 
 function music(){
@@ -379,7 +385,8 @@ function music(){
     for(var i = 0; i<tabs.length; i++){
         tabs[i].style.backgroundColor = "#043731";
     }
-    document.getElementById("music").style.backgroundColor = "#34C6CD"
+    document.getElementById("music").style.backgroundColor = "#34C6CD";
+    color = "#34C6CD";
 }
 
 function games(){
@@ -395,10 +402,22 @@ function games(){
     });
     var tabs = document.getElementsByClassName("tab");
     for(var i = 0; i<tabs.length; i++){
-        tabs[i].style.color = "#043731";
+        tabs[i].style.backgroundColor = "#043731";
     }
-    document.getElementById("games").style.color = "#34C6CD"
+    document.getElementById("games").style.backgroundColor = "#34C6CD";
+    color = "#34C6CD";
 }
+
+
+function tabHover(e){
+    color = e.style.backgroundColor;
+    e.style.backgroundColor = "#339999";
+}
+
+function tabUnhover(e){
+    e.style.backgroundColor = color;
+}
+
 $(document).ready(function() {
     var tab = document.getElementById("all").addEventListener('click', all, false);
     var tab = document.getElementById("movies").addEventListener('click', movies, false);
