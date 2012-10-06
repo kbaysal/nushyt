@@ -86,44 +86,43 @@ function createNewCalendar() {
 }
 
 function parseEventListResponse(response) {
-    if (response.items === undefined)
-        return;
-    response.items.forEach(function(item) {
-        var date = new Date(item.start.date);
-        console.log(date + ': ' + date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear());
-        var entry = new Entry(item.summary, date.getMonth() + 1, date.getDate(), date.getFullYear(), "", "", "");
-        removeEntry(toAdd, entry)
-    });
-    if (response.nextPageToken !== undefined) {
-        var request = gapi.client.events.list({
-            'calendarId': nushytCalId,
-            'pageToken': response.nextPageToken
+    if (response.items !== undefined) {
+        response.items.forEach(function(item) {
+            var date = new Date(item.start.date);
+            var entry = new Entry(item.summary, date.getMonth() + 1, date.getDate(), date.getFullYear(), "", "", "");
+            removeEntry(toAdd, entry)
         });
-        request.execute(function(response) {
-            parseEventListResponse(response);
-        });
-    } else {
-        toAdd.forEach(function(entry) {
-            var request = gapi.client.calendar.events.insert({
+        if (response.nextPageToken !== undefined) {
+            var request = gapi.client.events.list({
                 'calendarId': nushytCalId,
-                'resource': {
-                    'summary': entry.title,
-                    'start': {
-                        'date': entry.year + "-" + entry.month + "-" + entry.day
-                    },
-                    'end': {
-                        'date': entry.year + "-" + entry.month + "-" + entry.day
-                    },
-                    "reminders": {
-                        "useDefaults": true
-                    }
-                }
+                'pageToken': response.nextPageToken
             });
-            request.execute(function() {
+            request.execute(function(response) {
+                parseEventListResponse(response);
             });
-        });
-        toAdd = [];
+            return;
+        }
     }
+    toAdd.forEach(function(entry) {
+        var request = gapi.client.calendar.events.insert({
+            'calendarId': nushytCalId,
+            'resource': {
+                'summary': entry.title,
+                'start': {
+                    'date': entry.year + "-" + entry.month + "-" + entry.day
+                },
+                'end': {
+                    'date': entry.year + "-" + entry.month + "-" + entry.day
+                },
+                "reminders": {
+                    "useDefaults": true
+                }
+            }
+        });
+        request.execute(function() {
+        });
+    });
+    toAdd = [];
 }
 
 function populateNushytCalendar() {
@@ -173,12 +172,10 @@ function add(e){
     if (!containsEntry(toAdd, entry)) {
         toAdd.push(entry);
         e.target.parentNode.parentNode.getElementsByTagName("h2")[0].innerHTML = "Remove <br> from <br> calendar";
-        console.log("added event " + entry.title);
         e.target.parentNode.className += "show";
     } else {
         removeEntry(toAdd, entry);
         e.target.parentNode.parentNode.getElementsByTagName("h2")[0].innerHTML = "Add <br> to <br> calendar";
-        console.log("removed event" + entry.title);
         e.target.parentNode.className = "inner four columns ";
     }
 }
