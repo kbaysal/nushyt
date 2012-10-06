@@ -21,15 +21,17 @@
  */
  function setFadeDrawIntervalN(delay, repetitions){
 
-    var NIMS = Math.ceil(800/67);
+    
 
     var canvas = $("#myCanvas")[0];
     var cWidth = canvas.width;
     var cHeight = canvas.height;
+    var POSTER_HEIGHT = 67;
     var ctx = canvas.getContext('2d');
     var currentReps = 0;
     var alpha = 0;
     var intervalID;
+    var NIMS = Math.ceil(cWidth/POSTER_HEIGHT);
 
     var imgs = $(".liked");
     var totalImgs = imgs.length;
