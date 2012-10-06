@@ -320,6 +320,7 @@ function concertCallback(data) {
     var events = data.resultsPage.results.event;
     var title, venue, date, month, day, year, detail, entry;
     var type = "music";
+    var imageSearchBaseUrl = "http://developer.echonest.com/api/v4/artist/images?format=jsonp&results=1&start=0&api_key=UIZAIQEXG9AJYDRUN&id=songkick:artist:";
     if (events != undefined) {
         events.forEach(function(event) {
             var dateString;
@@ -337,6 +338,14 @@ function concertCallback(data) {
             year = date.getFullYear();
             detail = "performing at " + venue + ": ";
             entry = new Entry(title, month + 1, day, year, detail, "", type);
+            var callback = createImageCallback(entries.length);
+            var url = imageSearchBaseUrl + event.performance[0].artist.id;
+            $.ajax({
+                url: url,
+                dataType: "jsonp",
+                jsoncallback: callback,
+                success: window[callback]
+            });
             entries.push(entry);
         });
     }
@@ -347,6 +356,18 @@ function concertCallback(data) {
             callback();
         }
     }
+}
+
+function createImageCallback(id) {
+    var functionName = "imageCallback_" + id
+    window[functionName] = function(data) {
+        if (data.response.images !== undefined && data.response.images[0] !== undefined) {
+            var imgUrl = data.response.images[0].url;
+            entries[id].picture = imgUrl;
+        }
+        delete window[functionName];
+    }
+    return functionName;
 }
 
 function genSig(api, s) {

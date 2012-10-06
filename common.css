@@ -8,54 +8,82 @@ body{
 }
 
 .help{
-	float:right;
 	position: fixed;
 	text-align: center;
-	padding-top: 4px;
-	vertical-align: middle;
+	padding-top: 6px;
 	font-size: 32px;
-	height:46px;
+	height:44px;
 	width:50px;
 	background-color: #FFFF47;
 	z-index: 1;
+	overflow: hidden;
+
+	border-radius: 20px;
 
 	-webkit-transition: all 1s ease-in-out 0s;
+	transition: all 1s ease-in-out 0s;
 }
 
 .help:hover{
 	-webkit-transition-property: width, height, background;
 	-webkit-transition-duration: 1s, 1s, 1s;
+	-moz-transition-property: width, height, background;
+	-moz-transition-duration: 1s, 1s, 1s;
+	transition-property: width, height, background;
+	transition-duration: 1s, 1s, 1s;
 
+	padding-top: 10px;
+	padding-left: 4px;
+	padding-right: 4px;
 	width: 500px;
 	height: 500px;
-	background-color: blue;
+	background-color: green;
 }
 
 .nohover{
 	-webkit-transition: all 1s ease-in-out 0s;
-	display: inline;
+	-moz-transition: all 1s ease-in-out 0s;
+	transition: all 1s ease-in-out 0s;
+
+	display: block;
+	opacity:1;
+	height: 50;
 }
 
 .help:hover .nohover{
-	-webkit-transition-property: display;
-	-webkit-transition-duration: 1s;
-	display: none;
+	-webkit-transition-property: all 1s ease-in-out 0s;
+	-moz-transition-property: all 1s ease-in-out 0s;
+	transition-property: all 1s ease-in-out 0s;
 
+	opacity:0;
+	height:0;
 }
 
 .hover{
-	display: none;
-	-webkit-transition: all 4s ease-in-out 0s;
+	-webkit-transition: opacity 0s ease-in-out 0s;
+	-moz-transition: opacity 0s ease-in-out 0s;
+	transition: opacity 0s ease-in-out 0s;
+	opacity: 0;
+	height:0;
+	font-size:23pt;
 }
 
 .help:hover .hover{
-	-webkit-transition-property: display, font-size, text-align;
-	-webkit-transition-duration: 1s, 1s, 1s;
-	-webkit-transition-delay: 3s, 3s, 3s;
+	-webkit-transition: opacity 1s ease-out 1s;
+	-moz-transition: opacity 1s ease-out 1s;
+	transtion: opacity 1s ease-out 1s;
+	opacity: 1;
+	height:450px;
+}
 
-	text-align: left;
-	font-size: 20pt;
-	display:inline;
+#devs{
+	-webkit-text-stroke: 0px #000;
+	-moz-text-stroke: 0px #000;
+	text-stroke: 0px #000;
+
+	position: relative bottom;
+	font-size:12px;
+	
 }
 
 #mycanvas{
@@ -120,8 +148,6 @@ ul div{
 	text-align: center;
 	color: #043731;
 	font-family: 'Crete Round', serif;
-	-webkit-text-stroke: 0px;
-	-moz-text-stroke: 0px;
 }
 
 #personal{
