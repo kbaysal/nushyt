@@ -341,11 +341,13 @@ function concertCallback(data) {
             detail = "performing at " + venue + ": ";
             entry = new Entry(title, month + 1, day, year, detail, "", type);
             var url = imageSearchBaseUrl + event.performance[0].artist.id;
+            var callback = createImageCallback(entries.length);
             $.ajax({
                 url: url,
                 dataType: "jsonp",
-                jsonpCallback: createImageCallback(entries.length),
-                success: window[callback]
+                jsonpCallback: callback,
+                success: window[callback],
+                error: processedConcert(callback)
             });
             entries.push(entry);
         });
@@ -366,17 +368,21 @@ function createImageCallback(id) {
             var imgUrl = data.response.images[0].url;
             entries[id].picture = imgUrl;
         }
-        delete window[functionName];
-        concertCount--;
-        if (locationCount == 0 && concertCount == 0) {
-            count++;
-            console.log("concert: " + count);
-            if(count == totalCalls){
-                callback();
-            }
-        }
+        processedConcert(functionName);
     }
     return functionName;
+}
+
+function processedConcert(functionName) {
+    delete window[functionName];
+    concertCount--;
+    if (locationCount == 0 && concertCount == 0) {
+        count++;
+        console.log("concert: " + count);
+        if(count == totalCalls){
+            callback();
+        }
+    }
 }
 
 function genSig(api, s) {
