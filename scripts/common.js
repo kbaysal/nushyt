@@ -160,8 +160,6 @@ function hide(e){
     JQtarget.find("h2").css("visibility", "hidden") ;
 }
 function createEntry(entry, index){
-    if(entry.picture === "" )
-            entry.picture = "images/poster_default.gif";
     $("#results").append('<div class=\"result four columns ' + entry.type + '\" id=\"' + index +  '\">'
                           +'<div class=\"inner four columns \">'
                           +'<h1>' + entry.title + '</h1>'
@@ -173,7 +171,10 @@ function createEntry(entry, index){
     var addButton = document.getElementById(index).addEventListener('click', add, false);
     var addButton = document.getElementById(index).addEventListener('mouseenter', reveal, false);
     var addButton = document.getElementById(index).addEventListener('mouseleave', hide, false);
-    document.getElementById(index).style.backgroundImage = "url("+entry.picture+")";
+    
+    if(entry.picture !== "" )
+        document.getElementById(index).style.backgroundImage = "url("+entry.picture+")";
+    
 }
 
 function createPersonal(entry, index){
@@ -267,6 +268,7 @@ function callback(){
 }
 
 function all(){
+    $("#results"). empty();
     var count = 0;
     entries.forEach(function(entry) {
         createEntry(entry, count);
