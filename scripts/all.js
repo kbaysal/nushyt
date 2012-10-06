@@ -71,8 +71,16 @@ $(document).ready(function() {
 });
 
 function getLocation() {
+    var timeout = 5000;
+    var timeoutHandler = setTimeout(showError, timeout);
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, showError, {timeout:5000});
+        navigator.geolocation.getCurrentPosition(function(position) {
+            clearTimeout(timeOuthandler);
+            showPosition(position);
+        }, function(error) {
+            clearTimeout(timeoutHandler);
+            showError(error);
+        }, {timeout:5000});
     }
     else{
         count++;
@@ -99,7 +107,6 @@ function showPosition(position) {
 }
 
 function showError(error) {
-    console.log(error.code);
     count++;
     if(count==totalCalls){
         callback();
