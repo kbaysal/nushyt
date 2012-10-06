@@ -1,6 +1,7 @@
 body{
 	-webkit-text-stroke: 1px #000;
 	-moz-text-stroke: 1px #000;
+	text-stroke: 1px #000;
 	background-color: #009e8e;
 	color: #FFF;
 	font-family: 'Crete Round', serif;
@@ -10,21 +11,31 @@ body{
 .help{
 	position: fixed;
 	text-align: center;
-	padding-top: 4px;
+	padding-top: 6px;
 	font-size: 32px;
-	height:46px;
+	height:44px;
 	width:50px;
 	background-color: #FFFF47;
 	z-index: 1;
 	overflow: hidden;
 
+	border-radius: 20px;
+
 	-webkit-transition: all 1s ease-in-out 0s;
+	transition: all 1s ease-in-out 0s;
 }
 
 .help:hover{
 	-webkit-transition-property: width, height, background;
 	-webkit-transition-duration: 1s, 1s, 1s;
+	-moz-transition-property: width, height, background;
+	-moz-transition-duration: 1s, 1s, 1s;
+	transition-property: width, height, background;
+	transition-duration: 1s, 1s, 1s;
 
+	padding-top: 10px;
+	padding-left: 4px;
+	padding-right: 4px;
 	width: 500px;
 	height: 500px;
 	background-color: green;
@@ -32,6 +43,9 @@ body{
 
 .nohover{
 	-webkit-transition: all 1s ease-in-out 0s;
+	-moz-transition: all 1s ease-in-out 0s;
+	transition: all 1s ease-in-out 0s;
+
 	display: block;
 	opacity:1;
 	height: 50;
@@ -39,21 +53,38 @@ body{
 
 .help:hover .nohover{
 	-webkit-transition-property: all 1s ease-in-out 0s;
+	-moz-transition-property: all 1s ease-in-out 0s;
+	transition-property: all 1s ease-in-out 0s;
+
 	opacity:0;
 	height:0;
 }
 
 .hover{
+	-webkit-transition: opacity 0s ease-in-out 0s;
+	-moz-transition: opacity 0s ease-in-out 0s;
+	transition: opacity 0s ease-in-out 0s;
 	opacity: 0;
 	height:0;
 	font-size:23pt;
-	-webkit-transition: all 0s ease-in-out 0s;
 }
 
 .help:hover .hover{
-	-webkit-transition: all 1s ease-out 1s;
+	-webkit-transition: opacity 1s ease-out 1s;
+	-moz-transition: opacity 1s ease-out 1s;
+	transtion: opacity 1s ease-out 1s;
 	opacity: 1;
-	height:500px;
+	height:450px;
+}
+
+#devs{
+	-webkit-text-stroke: 0px #000;
+	-moz-text-stroke: 0px #000;
+	text-stroke: 0px #000;
+
+	position: relative bottom;
+	font-size:12px;
+	
 }
 
 #mycanvas{
@@ -68,6 +99,8 @@ body{
 .header{
 	-webkit-text-stroke: 2px #000;
 	-moz-text-stroke: 2px #000;
+	text-stroke: 2px #000;
+
 	color: #FFF;
 	z-index:100;
 	font-size: 72px;
@@ -129,6 +162,7 @@ ul div{
 	font-family: 'Crete Round', serif;
 	-webkit-text-stroke: 0px;
 	-moz-text-stroke: 0px;
+	text-stroke: 0px;
 }
 
 #inputs{
