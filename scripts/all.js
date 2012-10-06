@@ -342,14 +342,20 @@ function concertCallback(data) {
             entry = new Entry(title, month + 1, day, year, detail, "", type);
             var url = imageSearchBaseUrl + event.performance[0].artist.id;
             var callback = createImageCallback(entries.length);
+            entries.push(entry);
             $.ajax({
                 url: url,
                 dataType: "jsonp",
                 jsonpCallback: callback,
+                timeout: 5000,
                 success: window[callback],
-                error: processedConcert(callback)
+                error: function() {
+                },
+                complete: function() {
+                    console.log(callback);
+                    processedConcert(callback);
+                }
             });
-            entries.push(entry);
         });
     }
     locationCount--;
@@ -363,12 +369,12 @@ function concertCallback(data) {
 
 function createImageCallback(id) {
     var functionName = "imageCallback_" + id
+    var errorName = functionName + "_error";
     window[functionName] = function(data) {
         if (data.response.images !== undefined && data.response.images[0] !== undefined) {
             var imgUrl = data.response.images[0].url;
             entries[id].picture = imgUrl;
         }
-        processedConcert(functionName);
     }
     return functionName;
 }
