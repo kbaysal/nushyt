@@ -16,7 +16,6 @@ $(document).ready(function() {
     // construct the uri with our apikey
     var tvUrl = 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%20%3D%20%22http://www.metacritic.com/browse/tv/release-date/new-series/date?view=detailed%22%20and%20xpath%3D%22*%22&format=xml&callback=tvCallback';
 
-    console.log(tvUrl);
 
     $.ajax({
         url: tvUrl,
@@ -24,7 +23,6 @@ $(document).ready(function() {
         success: tvCallback
     });
 
-    console.log(dvdUrl);
     // send off the query
     $.ajax({
         url: theaterUrl,
@@ -46,7 +44,6 @@ $(document).ready(function() {
     // construct the uri with our apikey
     var musicUrl = 'http://jsonp.jit.su/?callback=albumCallback&url='+ baseUrl + '%2Fmusic%2Ffilterbrowse%3Fapikey%3D' + apikey + '%26sig%3D' + genSig(apikey, secret)+ "%26entitytype%3Dalbum%26filter%3DreleaseDate%253E20121003%26format%3Djson";
 
-    console.log(musicUrl);
 
     $.ajax({
         url: musicUrl,
@@ -56,7 +53,6 @@ $(document).ready(function() {
 
     var gameUrl = 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2Fwww.gamefly.com%2Fbuy-games%2FBrowse%2F%3Fcat%3DComingSoon%26page%3D1%26pageSize%3D48%22&format=xml&diagnostics=true&callback=gameCallback';
 
-    console.log(gameUrl);
 
     $.ajax({
         url: gameUrl,
@@ -68,7 +64,7 @@ $(document).ready(function() {
     songKickBaseUrl = "http://api.songkick.com/api/3.0";
 
     var locationSearchUrl = songKickBaseUrl + "/search/locations.json?location=clientip&apikey=" + songKickApiKey + "&jsoncallback=areaSearchCallback";
-    console.log(locationSearchUrl);
+
     $.ajax ({
         url: locationSearchUrl,
         dataType: "jsonp",
@@ -89,7 +85,6 @@ function theaterCallback(data) {
         entries.push(entry);
     });
     count++;
-    console.log("theater: " + count);
     if(count==totalCalls){
         callback();
     }
@@ -107,7 +102,7 @@ function dvdCallback(data) {
         entries.push(entry)
     });
     count++;
-    console.log("dvd: " + count);
+
     if(count==totalCalls){
         callback();
     }
@@ -136,7 +131,6 @@ function tvCallback(data) {
         identifier = '</a>';
         index = html.indexOf(identifier);
         title = html.substring(0, index);
-        console.log(title);
 
         //get date:
         var identifier = 'Start date:';
@@ -148,7 +142,6 @@ function tvCallback(data) {
         identifier = '</span>';
         index = html.indexOf(identifier);
         date = html.substring(0, index);
-        console.log(date);
         month = 09;
         day = date.substring(4, 6);
         year = 2012;
@@ -169,7 +162,6 @@ function tvCallback(data) {
         counter++;
     }
     count++;
-    console.log("tv: " + count);
     if(count==totalCalls){
         callback();
     }
@@ -197,7 +189,6 @@ function gameCallback(data) {
         identifier = '"';
         index = html.indexOf(identifier);
         img = html.substring(0, index);
-        console.log(img);
 
         //get date:
         var identifier = '<a class="title a detailsUrl text" href=';
@@ -209,7 +200,6 @@ function gameCallback(data) {
         identifier = '</a>';
         index = html.indexOf(identifier);
         title = html.substring(0, index);
-        console.log(title);
 
         //get image: 
         var identifier = 'div class="release-date text-small space-top-1a">';
@@ -249,7 +239,6 @@ function gameCallback(data) {
         counter++;
     }
     count++;
-    console.log("game: " + count);
     if(count==totalCalls){
         callback();
     }
@@ -289,7 +278,6 @@ function imageCallback(data){
     imageCount++;
     if(imageCount === albumNum){ 
         count++;
-        console.log("album: " + count);
         if(count==totalCalls){
             callback();
         }
@@ -319,7 +307,6 @@ function areaSearchCallback(data) {
         var location = locations[i];
         var metroAreaId = location.metroArea.id;
         var upcomingEventsUrl = songKickBaseUrl + "/metro_areas/" + metroAreaId + "/calendar.json?apikey=" + songKickApiKey + "&jsoncallback=concertCallback";
-        console.log(upcomingEventsUrl);
         $.ajax({
             url: upcomingEventsUrl,
             dataType: "jsonp",
@@ -356,7 +343,6 @@ function concertCallback(data) {
     locationCount--;
     if (locationCount == 0) {
         count++;
-        console.log("concert: " + count);
         if(count==totalCalls){
             callback();
         }

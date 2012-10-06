@@ -136,8 +136,8 @@ function entryCompare(e1, e2){
  * add - event handler to add a selection to the user's calendar
 */
 function add(e){
-    var index = e.target.getAttribute("id");
     var JQtarget = $(e.target);
+    var index = e.target.parentNode.parentNode.getAttribute("id");
     JQtarget.parent().find("img").attr("class", "liked");
     var entry = entries[index];
     if (!(containsEntry(toAdd, entry) || containsEntry(added, entry))) {
@@ -148,27 +148,49 @@ function add(e){
     }
 }
 
+function reveal(e){
+    var index = e.target.getAttribute("id");
+    var JQtarget = $(e.target);
+    JQtarget.find("h2").css("visibility", "visible") ;
+}
+
+function hide(e){
+    var index = e.target.getAttribute("id");
+    var JQtarget = $(e.target);
+    JQtarget.find("h2").css("visibility", "hidden") ;
+}
 function createEntry(entry, index){
     if(entry.picture === "" )
             entry.picture = "images/poster_default.gif";
-    $("#results").append('<div class=\"result ' + entry.type + '\">'
-                          +'<img src="' + entry.picture + '" />'
+    $("#results").append('<div class=\"result four columns ' + entry.type + '\" id=\"' + index +  '\">'
+                          +'<div class=\"inner four columns \">'
                           +'<h1>' + entry.title + '</h1>'
-                          +'<h2 id=' + index + '> Add to calendar </h2>'
+                          +'<h2> Add <br> to <br> calendar </h2>'
                           +'<h3>' + entry.detail + entry.month + "/" + entry.day + "/" + entry.year + '</h1>'
+                          +'<img src="' + entry.picture + '" />'
+                          +'</div>'
                           +'</div>');
     var addButton = document.getElementById(index).addEventListener('click', add, false);
+    var addButton = document.getElementById(index).addEventListener('mouseenter', reveal, false);
+    var addButton = document.getElementById(index).addEventListener('mouseleave', hide, false);
+    document.getElementById(index).style.backgroundImage = "url("+entry.picture+")";
 }
 
-function createPersonal(entry){
+function createPersonal(entry, index){
     if(entry.picture === "" )
             entry.picture = "images/poster_default.gif";
-    $("#personal").append('<div class=\"result ' + entry.type + '\">'
-                          +'<img src="' + entry.picture + '" />'
+    $("#personal").append('<div class=\"result four columns ' + entry.type + '\" id=\"' + index +  '\">'
+                          +'<div class=\"inner four columns \">'
                           +'<h1>' + entry.title + '</h1>'
-                          +'<h2> Add to calendar </h2>'
+                          +'<h2> Add <br> to <br> calendar </h2>'
                           +'<h3>' + entry.detail + entry.month + "/" + entry.day + "/" + entry.year + '</h1>'
+                          +'<img src="' + entry.picture + '" />'
+                          +'</div>'
                           +'</div>');
+    var addButton = document.getElementById(index).addEventListener('click', add, false);
+    var addButton = document.getElementById(index).addEventListener('mouseenter', reveal, false);
+    var addButton = document.getElementById(index).addEventListener('mouseleave', hide, false);
+    document.getElementById(index).style.backgroundImage = "url("+entry.picture+")";
 }
 
 function contains(array, title){
@@ -220,10 +242,12 @@ function likesCallback(data){
         });
 
         $("#personal").empty();
+        var count = entries.length;
         entries.forEach(function(entry){
             likes.forEach(function(like){
                 if(entry['title'].toLowerCase() === like['Name'].toLowerCase()){
-                    createPersonal(entry);
+                    createPersonal(entry, count);
+                    count++
                 }
             });
         });
@@ -289,13 +313,12 @@ function games(){
         count++;
     });
 }
-
 $(document).ready(function() {
-    var all = document.getElementById("all").addEventListener('click', all, false);
-    var movies = document.getElementById("movies").addEventListener('click', movies, false);
-    var tv = document.getElementById("tv").addEventListener('click', tv, false);
-    var music = document.getElementById("music").addEventListener('click', music, false);
-    var games = document.getElementById("games").addEventListener('click', games, false);
+    var tab = document.getElementById("all").addEventListener('click', all, false);
+    var tab = document.getElementById("movies").addEventListener('click', movies, false);
+    var tab = document.getElementById("tv").addEventListener('click', tv, false);
+    var tab = document.getElementById("music").addEventListener('click', music, false);
+    var tab = document.getElementById("games").addEventListener('click', games, false);
     setInterval(function(){drawBanner()}, 3000);
 });
 
