@@ -21,8 +21,8 @@
  function setFadeDrawIntervalN(delay, repetitions){
 
     var canvas = $("#myCanvas");
-    var cWidth = canvas.css("width");
-    var cHeight = canvas.css("height");
+    var cWidth = parseInt(canvas.css("width"));
+    var cHeight = parseInt(canvas.css("height"));
     var POSTER_HEIGHT = 67;
     var ctx = canvas[0].getContext('2d');
     var currentReps = 0;

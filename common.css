@@ -17,12 +17,13 @@ body{
 	height:44px;
 	width:50px;
 	background-color: #FFFF47;
-	z-index: 1002;
+	z-index: 1500;
 	overflow: hidden;
 
 	border-radius: 20px;
 
 	-webkit-transition: all 1s ease-in-out 0s;
+	-moz-transition: all 1s ease-in-out 0s;
 	transition: all 1s ease-in-out 0s;
 }
 
@@ -230,7 +231,7 @@ body{
 }
 
 .result img{
-	position: relative;
+	position: absolute;
 	top: 0px;
 	display: inline-block;
 }

@@ -162,6 +162,10 @@ function entryCompare(e1, e2){
 function add(e){
     var index = e.getAttribute("id");
     e.getElementsByTagName("img")[0].setAttribute("class", "liked");
+// =======
+//     var JQtarget = $(e.target);
+//     var index = e.target.parentNode.parentNode.getAttribute("id");
+//     JQtarget.parent().find("img").toggleClass("liked");
     var entry;
     if (index >= entries.length) {
         entry = likes[index - entries.length];
