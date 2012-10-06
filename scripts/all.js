@@ -66,13 +66,13 @@ $(document).ready(function() {
 
     var locationSearchUrl = songKickBaseUrl + "/search/locations.json?location=clientip&apikey=" + songKickApiKey + "&jsoncallback=areaSearchCallback";
 
-    getLocation();
-/*
+    // getLocation();
+
     $.ajax ({
         url: locationSearchUrl,
         dataType: "jsonp",
         success: areaSearchCallback
-    });*/
+    });
 });
 
 function getLocation()
@@ -381,7 +381,7 @@ function concertCallback(data) {
     var events = data.resultsPage.results.event;
     var title, venue, date, month, day, year, detail, entry;
     var type = "music";
-    var imageSearchBaseUrl = "http://developer.echonest.com/api/v4/artist/images?format=jsonp&results=1&start=0&api_key=UIZAIQEXG9AJYDRUN&id=songkick:artist:";
+    var imageSearchBaseUrl = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&api_key=b25b959554ed76058ac220b7b2e0a026&format=json&artist=";
     if (events != undefined) {
         concertCount += events.length;
         events.forEach(function(event) {
@@ -401,19 +401,16 @@ function concertCallback(data) {
             detail = "performing at " + venue + ": ";
             entry = new Entry(title, month + 1, day, year, detail, "", type);
             //http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=Cher&api_key=b25b959554ed76058ac220b7b2e0a026&format=json&callback=hello
-            var url = imageSearchBaseUrl + event.performance[0].artist.id;
+            var url = imageSearchBaseUrl + event.performance[0].artist.displayName;
             var callback = createImageCallback(entries.length);
             entries.push(entry);
             $.ajax({
                 url: url,
                 dataType: "jsonp",
                 jsonpCallback: callback,
-                timeout: 5000,
-                success: window[callback],
                 error: function() {
                 },
                 complete: function() {
-                    console.log(callback);
                     processedConcert(callback);
                 }
             });
@@ -429,11 +426,10 @@ function concertCallback(data) {
 }
 
 function createImageCallback(id) {
-    var functionName = "imageCallback_" + id
-    var errorName = functionName + "_error";
+    var functionName = "imageCallback_" + id;
     window[functionName] = function(data) {
-        if (data.response.images !== undefined && data.response.images[0] !== undefined) {
-            var imgUrl = data.response.images[0].url;
+        if (data.artist !== undefined && data.artist.image[2] !== undefined) {
+            var imgUrl = data.artist.image[2]["#text"];
             entries[id].picture = imgUrl;
         }
     }
@@ -445,7 +441,6 @@ function processedConcert(functionName) {
     concertCount--;
     if (locationCount == 0 && concertCount == 0) {
         count++;
-        console.log("concert: " + count);
         if(count == totalCalls){
             callback();
         }
