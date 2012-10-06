@@ -124,17 +124,17 @@ ul{
 
 ul div{
 	float:left;
-	margin-left: 50px;
+	margin-left:10px;
+	margin-right: 40px;
 	color: #043731;
 	display: inline;
+	cursor: pointer;
 }
-.nav a:link {
-	text-decoration: none;
-	padding:5px;
+
+#all{
+	color: #34C6CD;
 }
-.nav a:hover {
-	color: #FF6;
-}
+
 
 #prefs{
 	position: relative;

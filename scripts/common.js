@@ -160,9 +160,8 @@ function entryCompare(e1, e2){
  * add - event handler to add a selection to the user's calendar
 */
 function add(e){
-    var JQtarget = $(e.target);
-    var index = e.target.parentNode.parentNode.getAttribute("id");
-    JQtarget.parent().find("img").attr("class", "liked");
+    var index = e.getAttribute("id");
+    e.getElementsByTagName("img")[0].setAttribute("class", "liked");
     var entry;
     if (index >= entries.length) {
         entry = likes[index - entries.length];
@@ -171,32 +170,27 @@ function add(e){
     }
     if (!containsEntry(toAdd, entry)) {
         toAdd.push(entry);
-        e.target.parentNode.parentNode.getElementsByTagName("h2")[0].innerHTML = "Remove <br> from <br> calendar";
-        e.target.parentNode.className += "show";
+        e.getElementsByTagName("h2")[0].innerHTML = "Remove <br> from <br> calendar";
+        e.getElementsByClassName("inner")[0].className += "show";
     } else {
         removeEntry(toAdd, entry);
-        e.target.parentNode.parentNode.getElementsByTagName("h2")[0].innerHTML = "Add <br> to <br> calendar";
-        e.target.parentNode.className = "inner four columns ";
+        e.getElementsByTagName("h2")[0].innerHTML = "Add <br> to <br> calendar";
+        e.getElementsByClassName("inner")[0].className = "inner four columns ";
     }
 }
-
 function reveal(e){
-    var index = e.target.getAttribute("id");
-    var JQtarget = $(e.target);
-    JQtarget.find("h2").css("visibility", "visible") ;
+    e.getElementsByTagName("h2")[0].style.visibility = "visible";
 }
 
 function hide(e){
-    var index = e.target.getAttribute("id");
-    var JQtarget = $(e.target);
-    JQtarget.find("h2").css("visibility", "hidden") ;
+    e.getElementsByTagName("h2")[0].style.visibility = "hidden";
 }
 function createEntry(entry, index){
     
     var date = entry.month + "/" + entry.day + "/" + entry.year;
     if(entry.month == "TBD"){
         var date = "TBD"
-    }$("#results").append('<div class=\"result four columns ' + entry.type + '\" id=\"' + index +  '\">'
+    }$("#results").append('<div class=\"result four columns ' + entry.type + '\" id=\"' + index +  '\" onclick=\"add(this)\" onmouseover=\"reveal(this)\" onmouseout=\"hide(this)\">'
                           +'<div class=\"inner four columns \">'
                           +'<h1>' + entry.title + '</h1>'
                           +'<h2> Add <br> to <br> calendar </h2>'
@@ -204,9 +198,6 @@ function createEntry(entry, index){
                           +'<img src="' + entry.picture + '" />'
                           +'</div>'
                           +'</div>');
-    var addButton = document.getElementById(index).addEventListener('click', add, false);
-    var addButton = document.getElementById(index).addEventListener('mouseenter', reveal, false);
-    var addButton = document.getElementById(index).addEventListener('mouseleave', hide, false);
     
     if(entry.picture !== "" )
         document.getElementById(index).style.backgroundImage = "url("+entry.picture+")";
@@ -315,10 +306,7 @@ function likesCallback(data){
 
 function callback(){
     entries = entries.sort(entryCompare);
-    all();
-}
-
-function all(){
+    
     $("#results"). empty();
     var count = 0;
     entries.forEach(function(entry) {
@@ -327,44 +315,89 @@ function all(){
     });
 }
 
-function movies(){
-    $("#results"). empty();
+function all(){
     var count = 0;
-    entries.forEach(function(entry) {
-        if(entry.type === "movie")
-            createEntry(entry, count);
+    var items = document.getElementsByClassName("result");
+    $.each(items, function(index, item) {
+        items[index].style.display = "block";
+    });
+    var tabs = document.getElementsByClassName("tab");
+    for(var i = 0; i<tabs.length; i++){
+        tabs[i].style.color = "#043731";
+    }
+    document.getElementById("all").style.color = "#34C6CD"
+}
+
+function movies(){
+    var count = 0;
+    var items = document.getElementsByClassName("result");
+    $.each(entries, function(index, entry) {
+        if(entry.type !== "movie")
+            items[index].style.display = "none";
+        else{
+            items[index].style.display = "block";
+        }
         count++;
     });
+    var tabs = document.getElementsByClassName("tab");
+    for(var i = 0; i<tabs.length; i++){
+        tabs[i].style.color = "#043731";
+    }
+    document.getElementById("movies").style.color = "#34C6CD"
 }
 
 function tv(){
-    $("#results"). empty();
     var count = 0;
-    entries.forEach(function(entry) {
-        if(entry.type === "tv")
-            createEntry(entry, count);
+    var items = document.getElementsByClassName("result");
+    $.each(entries, function(index, entry) {
+        if(entry.type !== "tv")
+            items[index].style.display = "none";
+        else{
+            items[index].style.display = "block";
+        }
         count++;
     });
+    var tabs = document.getElementsByClassName("tab");
+    for(var i = 0; i<tabs.length; i++){
+        tabs[i].style.color = "#043731";
+    }
+    document.getElementById("tv").style.color = "#34C6CD"
 }
 
 function music(){
-    $("#results"). empty();
     var count = 0;
-    entries.forEach(function(entry) {
-        if(entry.type === "music")
-            createEntry(entry, count);
+    var items = document.getElementsByClassName("result");
+    $.each(entries, function(index, entry) {
+        if(entry.type !== "music")
+            items[index].style.display = "none";
+        else{
+            items[index].style.display = "block";
+        }
         count++;
     });
+    var tabs = document.getElementsByClassName("tab");
+    for(var i = 0; i<tabs.length; i++){
+        tabs[i].style.color = "#043731";
+    }
+    document.getElementById("music").style.color = "#34C6CD"
 }
 
 function games(){
-    $("#results"). empty();
     var count = 0;
-    entries.forEach(function(entry) {
-        if(entry.type === "game")
-            createEntry(entry, count);
+    var items = document.getElementsByClassName("result");
+    $.each(entries, function(index, entry) {
+        if(entry.type !== "game")
+            items[index].style.display = "none";
+        else{
+            items[index].style.display = "block";
+        }
         count++;
     });
+    var tabs = document.getElementsByClassName("tab");
+    for(var i = 0; i<tabs.length; i++){
+        tabs[i].style.color = "#043731";
+    }
+    document.getElementById("games").style.color = "#34C6CD"
 }
 $(document).ready(function() {
     var tab = document.getElementById("all").addEventListener('click', all, false);
