@@ -9,6 +9,8 @@ body{
 
 .help{
 	position: fixed;
+	top:0px;
+	left:0px;
 	text-align: center;
 	padding-top: 6px;
 	font-size: 32px;
@@ -35,8 +37,8 @@ body{
 	padding-top: 10px;
 	padding-left: 4px;
 	padding-right: 4px;
-	width: 500px;
-	height: 500px;
+	width: 340px;
+	height: 340px;
 	background-color: green;
 }
 
@@ -65,7 +67,7 @@ body{
 	transition: opacity 0s ease-in-out 0s;
 	opacity: 0;
 	height:0;
-	font-size:23pt;
+	font-size:22px;
 }
 
 .help:hover .hover{
@@ -73,7 +75,7 @@ body{
 	-moz-transition: opacity 1s ease-out 1s;
 	transtion: opacity 1s ease-out 1s;
 	opacity: 1;
-	height:450px;
+	height:320px;
 }
 
 #devs{
@@ -108,8 +110,8 @@ body{
 }
 
 .top_bar{
-	position:relative;
-	top:-20px;
+	position:static;
+	margin-top:120px;
 	height: 30px;
 }
 
@@ -118,17 +120,22 @@ body{
 	text-align:center;
 	font-size: 25px;
 	clear:both;
-	position:relative;
+	position:static;
 	top:130px;
 	margin-left:10px;
 }
 
+.tab:hover{
+	background-color: #339999;
+}
+
 .tab{
 	float:left;
-	width: 148px;
 	height: 50px;
 	margin-left: 1px;
 	margin-right: 1px;
+	margin-top: 1px;
+	margin-bottom: 1px;
 	vertical-align: text-bottom;
 	color: white;
 	display: inline;
@@ -142,11 +149,12 @@ body{
 
 
 #prefs{
-	position: relative;
-	top: 130px;
+	position: static;
+	height:40px;
 }
 
 #prefs input {        
+	margin-top:20px;
 	border-radius: 10px;
 	height:40px;
 	border: 1px solid #CDCDCD;
@@ -156,8 +164,9 @@ body{
 }
 
 #personal{
-	position: relative;
+	position: static;
 	top: 140px;
+	display: none;
 }
 
 
@@ -179,7 +188,7 @@ body{
 }
 
 #results{
-	position: relative;
+	position: static;
 	top: 140px;
 }
 

@@ -56,9 +56,10 @@
     .container .fifteen.columns                 { width: 880px; }
     .container .sixteen.columns                 { width: 940px; }
 
-    .container canvas.sixteen.columns                 { width: 940px; }
-    .container input.sixteen.columns            { width: 940px; font-size:25px;}
-    .inner {position: relative; left: -10px;}
+    .container canvas.sixteen.columns           { width: 940px; }
+    .container input.sixteen.columns            { width: 940px; font-size:25px; }
+    .inner                                      { position: relative; left: -10px; }
+    .tab                                        { width: 154px; }
 
     .container .one-third.column                { width: 300px; }
     .container .two-thirds.column               { width: 620px; }
@@ -123,6 +124,7 @@
         .container canvas.sixteen.columns                 { width: 748px; }
         .container input.sixteen.columns            { width: 748px; font-size:25px;}
         .inner {position: relative; left: -10px;}
+        .tab                          { width: 247px; }
 
         .container .one-third.column                { width: 236px; }
         .container .two-thirds.column               { width: 492px; }
@@ -184,9 +186,10 @@
         .inner {position: relative; left: 0px;}
 
 
-        .container input.sixteen.columns    { width: 300px; font-size:15px;}
+        .container input.sixteen.columns    { width: 300px; font-size:15px; margin-left:0px;}
 
         .container canvas.sixteen.columns    { width: 300px; font-size:15px;}
+        .tab                                 { width: 144px; }
 
         /* Offsets */
         .container .offset-by-one,
@@ -245,11 +248,12 @@
         .container input.sixteen.columns,
         .container .one-third.column,
         .container .two-thirds.column { width: 420px; }
+        .tab                          { width: 208px; }
 
         .inner {position: relative; left: 0px;}
 
 
-        .container input.sixteen.columns            { width: 420px; font-size:18px;}
+        .container input.sixteen.columns            { width: 420px; font-size:18px;margin-left:0px;}
     }
 
 
