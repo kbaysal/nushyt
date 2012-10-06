@@ -1,3 +1,11 @@
+Changes:
+All the things that youve added to the calendar are starred.
+You can also remove things from calendar
+Concert calls are done in one call now. 
+
+<h1>There's an issue with canvas. I couldn't figure it out. Could either of you take a look at it please, preferably Ted.</h1>
+
+
 TODO:
 * Style
 * Animation/transitions -> WE NEED IDEAS!
