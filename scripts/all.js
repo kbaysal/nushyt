@@ -75,7 +75,7 @@ function getLocation() {
     var timeoutHandler = setTimeout(showError, timeout);
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-            clearTimeout(timeOuthandler);
+            clearTimeout(timeoutHandler);
             showPosition(position);
         }, function(error) {
             clearTimeout(timeoutHandler);
