@@ -1,31 +1,40 @@
 body{
 	-webkit-text-stroke: 1px #000;
 	-moz-text-stroke: 1px #000;
-	background-color: #009e8e;
+	background-image: url('./images/light_wool.png');
 	color: #FFF;
 	font-family: 'Crete Round', serif;
 	z-index: -1;
 }
 
 .help{
-	float:right;
 	position: fixed;
 	text-align: center;
-	padding-top: 4px;
-	vertical-align: middle;
+	padding-top: 6px;
 	font-size: 32px;
-	height:46px;
+	height:44px;
 	width:50px;
 	background-color: #FFFF47;
 	z-index: 1;
+	overflow: hidden;
+
+	border-radius: 20px;
 
 	-webkit-transition: all 1s ease-in-out 0s;
+	transition: all 1s ease-in-out 0s;
 }
 
 .help:hover{
 	-webkit-transition-property: width, height, background;
 	-webkit-transition-duration: 1s, 1s, 1s;
+	-moz-transition-property: width, height, background;
+	-moz-transition-duration: 1s, 1s, 1s;
+	transition-property: width, height, background;
+	transition-duration: 1s, 1s, 1s;
 
+	padding-top: 10px;
+	padding-left: 4px;
+	padding-right: 4px;
 	width: 500px;
 	height: 500px;
 	background-color: green;
@@ -33,60 +42,75 @@ body{
 
 .nohover{
 	-webkit-transition: all 1s ease-in-out 0s;
+	-moz-transition: all 1s ease-in-out 0s;
+	transition: all 1s ease-in-out 0s;
+
 	display: block;
 	opacity:1;
-	height:auto;
+	height: 50;
 }
 
 .help:hover .nohover{
 	-webkit-transition-property: all 1s ease-in-out 0s;
+	-moz-transition-property: all 1s ease-in-out 0s;
+	transition-property: all 1s ease-in-out 0s;
+
 	opacity:0;
 	height:0;
 }
 
 .hover{
-	display:block;
+	-webkit-transition: opacity 0s ease-in-out 0s;
+	-moz-transition: opacity 0s ease-in-out 0s;
+	transition: opacity 0s ease-in-out 0s;
+	opacity: 0;
 	height:0;
-	opacity:0;
 	font-size:23pt;
-	-webkit-transition: all 0s ease-in-out 0s;
 }
 
 .help:hover .hover{
-	-webkit-transition: all 1s ease-out 1s;
+	-webkit-transition: opacity 1s ease-out 1s;
+	-moz-transition: opacity 1s ease-out 1s;
+	transtion: opacity 1s ease-out 1s;
+	opacity: 1;
+	height:450px;
+}
 
-	opacity:1;
-	height:auto;
+#devs{
+	-webkit-text-stroke: 0px #000;
+	-moz-text-stroke: 0px #000;
+	text-stroke: 0px #000;
+
+	position: relative bottom;
+	font-size:12px;
+	
 }
 
 #mycanvas{
-	position:absolute;
-	top:50px;
+	position: fixed;
+	top:0px;
 	height: 100px;
-	margin-left:auto;
-	margin-right:auto;
-	z-index:-1;
+	z-index:1000;
+	-moz-box-shadow:    0px 1px  5px 2px #043731;
+	-webkit-box-shadow:    0px 1px  5px 2px #043731;
+	box-shadow:    0px 1px  5px 2px #043731;
 }
 
 .header{
-	-webkit-text-stroke: 2px #000;
-	-moz-text-stroke: 2px #000;
+	position: fixed;
+	top:0px;
+	height: 100px;
 	color: #FFF;
-	z-index:100;
+	z-index:1001;
 	font-size: 72px;
 	text-align:center;
-
-	margin-left: auto;
-	margin-right:auto;
+	background-color: rgba(0, 0, 0, 0.5);
 }
 
 .top_bar{
-	width: 800px;
 	position:relative;
 	top:-20px;
 	height: 30px;
-	margin-left: auto;
-	margin-right:auto;
 }
 
 ul{
@@ -95,7 +119,7 @@ ul{
 	font-size: 25px;
 	clear:both;
 	position:relative;
-	top:-20px;
+	top:130px;
 }
 
 ul div{
@@ -114,107 +138,111 @@ ul div{
 
 #prefs{
 	position: relative;
-	top: 100px;
-	width:800px;
-	margin-left: auto;
-	margin-right:auto;
+	top: 130px;
 }
 
 #prefs input {        
-	width:800px;
 	border-radius: 10px;
 	height:40px;
-	padding-left: 10px;
-	font-size:25px;
 	border: 1px solid #CDCDCD;
 	text-align: center;
 	color: #043731;
 	font-family: 'Crete Round', serif;
-	-webkit-text-stroke: 0px;
-	-moz-text-stroke: 0px;
-}
-
-#inputs{
-	position: absolute;
-	top: 100px;
-	left: 10px;
-	width: 200px;
 }
 
 #personal{
 	position: relative;
-	top: 100px;
+	top: 140px;
 }
 
 
 #personal .result{
-	background-color: 043731;
-	width:800px;	
+	float:left;	
 	height: 150px;
 	margin-top: 25px;
-	margin-bottom: 25px;
-	margin-left: auto;
-	margin-right:auto;
-	border-radius: 10px;
 	color: white;
-	-moz-box-shadow:    0px 1px  5px 2px #043731;
-	-webkit-box-shadow:    0px 1px  5px 2px #043731;
-	box-shadow:    0px 1px  5px 2px #043731;
+	-moz-box-shadow:    0px 1px  5px 2px red;
+	-webkit-box-shadow:    0px 1px  5px 2px red;
+	box-shadow:    0px 1px  5px 2px red;
+	background-color:black;
+   	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	background-repeat: no-repeat;
+	background-size: Auto 100%;
+	background-position:center; 
 }
 
 #results{
 	position: relative;
-	top: 100px;
+	top: 140px;
 }
 
 #results .result{
-	background-color: white;
-	width:800px;	
+	float:left;	
 	height: 150px;
 	margin-top: 25px;
-	margin-bottom: 25px;
-	margin-left: auto;
-	margin-right:auto;
-	border-radius: 10px;
-	color: #043731;
+	color: white;
 	-moz-box-shadow:    0px 1px  5px 2px #043731;
 	-webkit-box-shadow:    0px 1px  5px 2px #043731;
 	box-shadow:    0px 1px  5px 2px #043731;
+	background-color:black;
+   	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	background-repeat: no-repeat;
+	background-size: Auto 100%;
+	background-position:center; 
+
 }
 
 #results .result:active{
 	position: relative;
     top: 2px;
 	-moz-box-shadow:    0px 1px  3px 0px #043731;
-	-webkit-box-shadow:    0px 1px  3px 0px #043731;
-	box-shadow:    0px 1px  3px 0px #043731;
+	-webkit-box-shadow: 0px 1px  3px 0px #043731;
+	box-shadow:         0px 1px  3px 0px #043731;
 }
 
+.inner{
+	height: 150px;
+	background-color: rgba(0, 0, 0, 0.5);
+}
 
 .result img{
 	position: relative;
-	top: 25px;
-	left: 25px;
-	height: 100px;
-	width: 67px;
+	top: 0px;
 	display: inline-block;
 }
 
 .result h1{
+	font-size: 20px;
+	color: white;
 	position: relative;
-	top:-100px;
-	left: 100px;
+	top: 10px;
 	overflow: hidden;
 	height:45px;
 	width:650px;
 }
 .result h2{
+	font-size: 40px;
 	position: relative;
-	top:-120px;
-	right: -600px;
+	top: -45px;
+	padding-top: 15px;
+	height: 135px;
+	color: white;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.8);
+	visibility: hidden;
+	z-index: 500;
 }
 .result h3{
 	position: relative;
-	top:-130px;
-	left: 100px;
+	top:-110px;
+	color: white;
 }
+
+.result img{
+	visibility: hidden;
+}
+

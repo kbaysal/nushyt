@@ -8,6 +8,9 @@
     @import url("reset.css");
     </style>
     <style type="text/css">
+    @import url("skeleton.css");
+    </style>
+    <style type="text/css">
     @import url("common.css");
     </style>
 
@@ -17,39 +20,52 @@
 
 <body>
     <div class="help">
-        <span class="nohover">?</span>
-        <span class="hover">Welcome to Nushyt!  Here, you can see new releases for Movies, TV, Music (including concerts and albums), and Games.  Use the search bar at the top to find new releases you may like, or just browse each category!  Click the "Add to calendar" text to add a release to your calendar.  After you're done collecting your releases, click the "Generate Calendar" button to generate a calendar with all of your selected releases!</span>
+        <div class="nohover">?</div>
+        <div class="hover">
+            Welcome to Nushyt!  Here, you can see new releases for Movies, TV, Music (including concerts and albums), and Games.  Use the search bar at the top to find new releases you may like, or just browse each category!  Click the "Add to calendar" text to add a release to your calendar.  After you're done collecting your releases, click the "Add to Google Calendar" button to generate add your selected releases to your Google calendar!
+
+            
+        </div>
+        <div class="hover" id="devs">
+                Developed By: Kiraz Baysal, Darren Lane, Edward Smongeski
+        </div>
+
     </div>
-    <div class="top_bar">
+    <div class="top_bar container">
+        
         <div class="canvas">
-            <canvas id="myCanvas" width="800" height="100">
+            <canvas class = "sixteen columns" id="myCanvas" height="100">
                 No canvas available!
             </canvas>
         </div>
-        <div class="header">
+        <div class="container">
+          <div class="header sixteen columns">
             nushyt
+          </div>
         </div>
+        <div class = "container">
         <ul class="tabs">
             <li class="nav"><div id="all" onclick="all">All</div>
             <li class="nav"><div id="movies" onclick="movies">Movies</div>
             <li class="nav"><div id="tv" onclick="tv">TV Shows</div>
             <li class="nav"><div id="music" oclick="music">Music</div>
             <li class="nav"><div id="games" onclick="games">Games</div>
+<<<<<<< HEAD
             <li class="nav"><button onclick="authorize();" id="googleButton">Add to Google Calendar</button></li>
+=======
+            <li class="nav"><button onclick="authorize();" id="googleButton">Add to my Google Calendar</button></li>
+>>>>>>> 034021184749dd6835eff68088dd7628a96807cf
         </ul>
+      </div>
     </div>
-    <div id="prefs">
-       <form>
-        <input type="text" name="likes" id="likes" placeholder="enter things you like to get personal results"><br>
+    <div id="prefs" class="container">
+       <form >
+        <input class="sixteen columns" type="text" name="likes" id="likes" placeholder="enter things you like to get personal results"><br>
       </form>
     </div>
-    <div id="personal">
+    <div class="container" id="personal">
     </div>
-    <div id="results">
-    </div>
-
-    <div id="inputs">
-        <h2>Your likes:</h2>
+    <div class="container" id="results">
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
         <script src="https://apis.google.com/js/client.js"></script>
