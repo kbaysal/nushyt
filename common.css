@@ -8,16 +8,15 @@ body{
 }
 
 .help{
-	float:right;
 	position: fixed;
 	text-align: center;
 	padding-top: 4px;
-	vertical-align: middle;
 	font-size: 32px;
 	height:46px;
 	width:50px;
 	background-color: #FFFF47;
 	z-index: 1;
+	overflow: hidden;
 
 	-webkit-transition: all 1s ease-in-out 0s;
 }
@@ -35,7 +34,7 @@ body{
 	-webkit-transition: all 1s ease-in-out 0s;
 	display: block;
 	opacity:1;
-	height:auto;
+	height: 50;
 }
 
 .help:hover .nohover{
@@ -45,18 +44,16 @@ body{
 }
 
 .hover{
-	display:block;
+	opacity: 0;
 	height:0;
-	opacity:0;
 	font-size:23pt;
 	-webkit-transition: all 0s ease-in-out 0s;
 }
 
 .help:hover .hover{
 	-webkit-transition: all 1s ease-out 1s;
-
-	opacity:1;
-	height:auto;
+	opacity: 1;
+	height:500px;
 }
 
 #mycanvas{
