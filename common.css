@@ -113,26 +113,31 @@ body{
 	height: 30px;
 }
 
-ul{
+.tabs{
 	list-style: none;
 	text-align:center;
 	font-size: 25px;
 	clear:both;
 	position:relative;
 	top:130px;
+	margin-left:10px;
 }
 
-ul div{
+.tab{
 	float:left;
-	margin-left:10px;
-	margin-right: 40px;
-	color: #043731;
+	width: 148px;
+	height: 50px;
+	margin-left: 1px;
+	margin-right: 1px;
+	vertical-align: text-bottom;
+	color: white;
 	display: inline;
 	cursor: pointer;
+	background-color: #043731;
 }
 
 #all{
-	color: #34C6CD;
+	background-color: #34C6CD;
 }
 
 

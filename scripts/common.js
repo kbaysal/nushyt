@@ -323,9 +323,9 @@ function all(){
     });
     var tabs = document.getElementsByClassName("tab");
     for(var i = 0; i<tabs.length; i++){
-        tabs[i].style.color = "#043731";
+        tabs[i].style.backgroundColor = "#043731";
     }
-    document.getElementById("all").style.color = "#34C6CD"
+    document.getElementById("all").style.backgroundColor = "#34C6CD"
 }
 
 function movies(){
@@ -341,9 +341,9 @@ function movies(){
     });
     var tabs = document.getElementsByClassName("tab");
     for(var i = 0; i<tabs.length; i++){
-        tabs[i].style.color = "#043731";
+        tabs[i].style.backgroundColor = "#043731";
     }
-    document.getElementById("movies").style.color = "#34C6CD"
+    document.getElementById("movies").style.backgroundColor = "#34C6CD"
 }
 
 function tv(){
@@ -359,9 +359,9 @@ function tv(){
     });
     var tabs = document.getElementsByClassName("tab");
     for(var i = 0; i<tabs.length; i++){
-        tabs[i].style.color = "#043731";
+        tabs[i].style.backgroundColor = "#043731";
     }
-    document.getElementById("tv").style.color = "#34C6CD"
+    document.getElementById("tv").style.backgroundColor = "#34C6CD"
 }
 
 function music(){
@@ -377,9 +377,9 @@ function music(){
     });
     var tabs = document.getElementsByClassName("tab");
     for(var i = 0; i<tabs.length; i++){
-        tabs[i].style.color = "#043731";
+        tabs[i].style.backgroundColor = "#043731";
     }
-    document.getElementById("music").style.color = "#34C6CD"
+    document.getElementById("music").style.backgroundColor = "#34C6CD"
 }
 
 function games(){
