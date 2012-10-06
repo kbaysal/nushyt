@@ -61,43 +61,49 @@ $(document).ready(function() {
         success: gameCallback
     });
 
+    getLocation();
+
+    // $.ajax ({
+    //     url: locationSearchUrl,
+    //     dataType: "jsonp",
+    //     success: areaSearchCallback
+    // });
+});
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError, {timeout:5000});
+    }
+    else{
+        count++;
+        if(count==totalCalls){
+            callback();
+        }
+    }
+}
+
+function showPosition(position) {
     songKickApiKey = "AVNqr7bkPoxHFdu3";
-    songKickBaseUrl = "http://api.songkick.com/api/3.0";
-
-    var locationSearchUrl = songKickBaseUrl + "/search/locations.json?location=clientip&apikey=" + songKickApiKey + "&jsoncallback=areaSearchCallback";
-
-    // getLocation();
-
+    songKickBaseUrl = "http://api.songkick.com/api/3.0"
+    var baseurl = songKickBaseUrl + "/search/locations.json?apikey=" + songKickApiKey + "&jsoncallback=areaSearchCallback&location=geo:";
+    var city, lng, lat;
+    if(position){
+        baseurl += position.coords.latitude + "," + position.coords.longitude;
+    }
+    console.log(baseurl);
     $.ajax ({
-        url: locationSearchUrl,
+        url: baseurl,
         dataType: "jsonp",
         success: areaSearchCallback
     });
-});
+}
 
-function getLocation()
-  {
-  if (navigator.geolocation)
-    {
-    navigator.geolocation.getCurrentPosition(showPosition);
+function showError(error) {
+    console.log(error.code);
+    count++;
+    if(count==totalCalls){
+        callback();
     }
-  else{showPosition();}
-  }
-function showPosition(position)
-{
-    var baseUrl = "http://ws.audioscrobbler.com/2.0/?method=geo.getevents&api_key=b25b959554ed76058ac220b7b2e0a026&format=json&callback=conCallback"
-    var city, lng, lat;
-    if(position){
-        baseUrl += "distance=40&long=" + position.longitude + "lat=" + position.latitude;
-    }
-    else{
-        baseUrl += "location=Pittsburgh"
-    }
-    $.ajax ({
-        url: baseUrl,
-        dataType: "jsonp",
-        success: conCallback
-    });
 }
 
 function conCallback(data) {
@@ -324,7 +330,7 @@ function albumCallback(data) {
         entry = new Entry(title, month, day, year,  " by " + band+ " - Album Out: ", "", "music");
         entries.push(entry);
         //http%3A%2F%2Fws.audioscrobbler.com%2F2.0%2F%3Fmethod%3Dalbum.getinfo%26api_key%3D69de64d9645edd7e1f9bb2e1edfef4f1%26artist%3DBrandy%26album%3DTwo%2520Eleven%26format%3Djson
-        imageUrl = 'http://ws.audioscrobbler.com/2.0/?method=album.getinfo&format=json&callback=imageCallback&api_key=' + api_key + '&artist=' + band + "&album=" + title;
+        var imageUrl = 'http://ws.audioscrobbler.com/2.0/?method=album.getinfo&format=json&callback=imageCallback&api_key=' + api_key + '&artist=' + band + "&album=" + title;
         $.ajax({
             url: imageUrl,
             dataType: "jsonp",

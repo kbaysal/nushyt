@@ -269,9 +269,8 @@ function removeEntry(array, entry) {
     }
 }
 
-var baseUrl = "http://www.tastekid.com/ask/ws?q=";
-
 function onSubmit(){
+    var baseUrl = "http://www.tastekid.com/ask/ws?q=";
     var likesUrl = baseUrl+document.getElementById('likes').value+"&f=nushyt4577&k=nznkmjqxm2e0&verbose=1&format=JSON&jsonp=likesCallback";
     $.ajax({
         url: likesUrl,
