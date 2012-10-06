@@ -9,7 +9,6 @@
     var delay = 60;
     var fadeTime = 3000;
     setFadeDrawIntervalN(delay, fadeTime/delay);
-    console.log(imPos +", " + imInd);
 };
 
     
