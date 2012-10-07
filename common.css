@@ -1,5 +1,5 @@
 body{
-	background-image: url('./images/noisy_grid.png');
+	background-image: url('./images/gplaypattern.png');
 	color: #FFF;
 	font-family: 'Crete Round', serif;
 	z-index: -1;
@@ -14,7 +14,7 @@ body{
 	font-size: 32px;
 	height:44px;
 	width:50px;
-	background-color: #FFFF47;
+	background-color: rgba(0, 0, 0, 0.5);
 	z-index: 1500;
 	overflow: hidden;
 
