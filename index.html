@@ -24,54 +24,51 @@
             ?
         </div>
         <div class="hover">
-            Welcome to Nushyt!  Here, you can see new releases for Movies, TV, Music (including concerts and albums), and Games.  Use the search bar at the top to find new releases you may like, or just browse each category!  Click the "Add to calendar" text to add a release to your calendar.  After you're done collecting your releases, click the "Add to Google Calendar" button to generate add your selected releases to your Google calendar!
+            Welcome to Nushyt!  Here, you can see new releases for Movies, TV, Music (including concerts and albums), and Games.  Use the search bar at the top to find new releases you may like, or just browse each category!  Click the "Add to calendar" text to add a release to your calendar.  After you're done collecting your releases, click the "Add to Google Calendar" button to add your selected releases to your Google calendar!
         </div>
         <div class="hover" id="devs">
             Developed By: Kiraz Baysal, Darren Lane, Edward Smongeski
         </div>
-
     </div>
     <div class="top_bar container">
-
         <div class="canvas">
             <canvas class = "sixteen columns" id="myCanvas" width="940" height="100">
                 No canvas available!
             </canvas>
         </div>
         <div class="container">
-          <div class="header sixteen columns">
-            nushyt
+            <div class="header sixteen columns">
+                nushyt
+            </div>
+        </div>
+        <div class = "container">
+            <div class = "tabs sixteen columns">
+                <div class="tab" id="all" onmouseover="tabHover(this)" onmouseOut="tabUnhover(this)">All</div>
+                <div class="tab" id="movies" onmouseover="tabHover(this)" onmouseOut="tabUnhover(this)">Movies</div>
+                <div class="tab" id="tv" onmouseover="tabHover(this)" onmouseOut="tabUnhover(this)">TV Shows</div>
+                <div class="tab" id="music" onmouseover="tabHover(this)" onmouseOut="tabUnhover(this)">Music</div>
+                <div class="tab" id="games" onmouseover="tabHover(this)" onmouseOut="tabUnhover(this)">Games</div>
+                <div class="tab" onclick="authorize()" id="googleButton" onmouseover="tabHover(this)" onmouseOut="tabUnhover(this)">
+                    Add to my Calendar
+                </div>
+            </div>
         </div>
     </div>
-    <div class = "container">
-      <div class = "tabs sixteen columns">
-        <div class="tab" id="all" onmouseover="tabHover(this)" onmouseOut="tabUnhover(this)">All</div></li>
-        <div class="tab" id="movies" onmouseover="tabHover(this)" onmouseOut="tabUnhover(this)">Movies</div></li>
-        <div class="tab" id="tv" onmouseover="tabHover(this)" onmouseOut="tabUnhover(this)">TV Shows</div></li>
-        <div class="tab" id="music" onmouseover="tabHover(this)" onmouseOut="tabUnhover(this)">Music</div></li>
-        <div class="tab" id="games" onmouseover="tabHover(this)" onmouseOut="tabUnhover(this)">Games</div></li>        
-        <div class="tab" onclick="authorize()" id="googleButton" onmouseover="tabHover(this)" onmouseOut="tabUnhover(this)">
-            Add to my Calendar
-        </div>
-    </li>
-</div>
-</div>
-</div>
-<div id="prefs" class="container">
-   <form>
-    <input class="sixteen columns" type="text" name="likes" id="likes" placeholder="enter things you like to get personal results"><br>
-</form>
-</div>
-<div class="container" id="personal">
-</div>
-<div class="container" id="results">
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-<script src="https://apis.google.com/js/client.js"></script>
-<script type="text/javascript" src="scripts/md5.js"></script>
-<script src="scripts/common.js"></script>
-<script src="scripts/all.js"></script>
-<script src="scripts/canvasArtist.js"></script>
+    <div id="prefs" class="container">
+        <form>
+            <input class="sixteen columns" type="text" name="likes" id="likes" placeholder="enter things you like to get personal results"><br>
+        </form>
+    </div>
+    <div class="container" id="personal">
+    </div>
+    <div class="container" id="results">
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <script src="https://apis.google.com/js/client.js"></script>
+    <script type="text/javascript" src="scripts/md5.js"></script>
+    <script src="scripts/common.js"></script>
+    <script src="scripts/all.js"></script>
+    <script src="scripts/canvasArtist.js"></script>
 </body>
 
 </html>
