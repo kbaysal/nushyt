@@ -34,7 +34,7 @@
     var totalImgs = imgs.length;
     var img = imgs[window.imInd];
 
-    if(totalImgs === 0 || $(img).attr("src") === ""){
+    if(totalImgs === 0 || $(img).attr("src") === "") {
         return;
     }
 
@@ -42,18 +42,18 @@
      * Anonymous function to fade in the given image on the canvas
      */
 
-     intervalID = setInterval(function(){
-
+    intervalID = setInterval(function() {
         ctx.globalAlpha = alpha;
-        ctx.drawImage(img, imPos*cWidth/NIMS, 0, cWidth/NIMS, cHeight);
+        ctx.drawImage(img, window.imPos*cWidth/NIMS, 0, cWidth/NIMS, cHeight);
 
         alpha = alpha + 1/(repetitions);
-        if(++currentReps > repetitions){
+        if(++currentReps > repetitions) {
             clearInterval(intervalID);
             window.imInd = (window.imInd + 1)%totalImgs;
             if(window.imPos < totalImgs-1)
                 window.imPos = (window.imPos+1)%NIMS;
             else
                 window.imPos = 0;
-        }}, delay);
+        }
+    }, delay);
  }

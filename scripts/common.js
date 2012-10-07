@@ -4,7 +4,6 @@ var entries = [];
 var toAdd = [];
 
 var clientId = '696158853178.apps.googleusercontent.com';
-var apiKey = 'AIzaSyBaPMTZhvwVYcgvXbB7wIuxnIgmhA2qnYU';
 var scopes = 'https://www.googleapis.com/auth/calendar';
 var nushytCalId;
 
@@ -18,46 +17,76 @@ function Entry(title, month, day, year, detail, picture, type){
     this.type = type;
 }
 
+Entry.prototype.compare = function(e2) {
+    if (this.month === "TBD") {
+        if (this.month === e2.month)
+            return 0;
+        else
+            return 1;
+    }
+    else if (e2.month === "TBD")
+        return -1;
+  
+  //this and e2 need to be Entry objects
+    if(this.year > e2.year)
+        return 1;
+    else if(this.year < e2.year)
+        return -1;
+
+    if(this.month > e2.month)
+        return 1;
+    else if(this.month < e2.month)
+        return -1;
+
+    if(this.day > e2.day)
+        return 1;
+    else if (this.day < e2.day)
+        return -1;
+
+    return 0;
+}
+
 function authorize() {
-  gapi.client.setApiKey(apiKey);
-  window.setTimeout(checkAuth,1);
+    var apiKey = 'AIzaSyBaPMTZhvwVYcgvXbB7wIuxnIgmhA2qnYU';
+    gapi.client.setApiKey(apiKey);
+    window.setTimeout(_checkAuth,1);
 }
 
-function checkAuth() {
-  gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: true}, handleAuthResult);
+function _checkAuth() {
+    gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: true}, handleAuthResult);
 }
 
-function handleAuthResult(authResult) {
-  var authorizeButton = document.getElementById('googleButton');
-  if (authResult && !authResult.error) {
-    makeApiCall();
-  } else {
-    authorizeButton.onclick = handleAuthClick;
-  }
+function _handleAuthResult(authResult) {
+    var authorizeButton = document.getElementById('googleButton');
+    if (authResult && !authResult.error) {
+        _makeApiCall();
+    } else {
+        authorizeButton.onclick = handleAuthClick;
+    }
 }
 
-function handleAuthClick(event) {
-  gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, makeApiCall);
-  return false;
+function _handleAuthClick(event) {
+    gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, makeApiCall);
+    return false;
 }
 
-function makeApiCall() {
+function _makeApiCall() {
     gapi.client.load('calendar', 'v3', createNushytCalendar);
 }
 
-function createNushytCalendar() {
-    if (undefined === nushytCalId) {
+function _createNushytCalendar() {
+    if (undefined === window.nushytCalId) {
         var request = gapi.client.calendar.calendarList.list({
             'minAccessRole': 'writer',
             'showHidden': true
         });
-        request.execute(parseList);
+        request.execute(_parseList);
     } else {
-        populateNushytCalendar();
+        _populateNushytCalendar();
     }
 }
 
-function parseList(jsonResp, rawResp) {
+function _parseList(jsonResp, rawResp) {
     var list = jsonResp.items;
     var lookingForCal = true;
     list.forEach(function(calendar) {
@@ -68,11 +97,11 @@ function parseList(jsonResp, rawResp) {
         }
     })
     if (lookingForCal) {
-        createNewCalendar();
+        _createNewCalendar();
     }
 }
 
-function createNewCalendar() {
+function _createNewCalendar() {
     var request = gapi.client.calendar.calendars.insert({
         'resource': {
             'summary': "Nushyt",
@@ -80,12 +109,12 @@ function createNewCalendar() {
         }
     });
     request.execute(function(response) {
-        nushytCalId = response.id;
-        populateNushytCalendar();
+        window.nushytCalId = response.id;
+        _populateNushytCalendar();
     });
 }
 
-function parseEventListResponse(response) {
+function _parseEventListResponse(response) {
     if (response.items !== undefined) {
         response.items.forEach(function(item) {
             var date = new Date(item.start.date);
@@ -98,7 +127,7 @@ function parseEventListResponse(response) {
                 'pageToken': response.nextPageToken
             });
             request.execute(function(response) {
-                parseEventListResponse(response);
+                _parseEventListResponse(response);
             });
             return;
         }
@@ -125,53 +154,29 @@ function parseEventListResponse(response) {
     toAdd = [];
 }
 
-function populateNushytCalendar() {
+function _populateNushytCalendar() {
     var request = gapi.client.calendar.events.list({
         'calendarId': nushytCalId
     });
     request.execute(function(response) {
-        parseEventListResponse(response);
+        _parseEventListResponse(response);
     });
-}
-
-function entryCompare(e1, e2){
-    if (e1.month === "TBD")
-        return 1;
-    else if (e2.month === "TBD")
-        return -1;
-  
-  //e1 and e2 need to be Entry objects
-    if(e1.year > e2.year)
-        return 1;
-    else if(e1.year < e2.year)
-        return -1;
-
-    if(e1.month > e2.month)
-        return 1;
-    else if(e1.month < e2.month)
-        return -1;
-
-    if(e1.day >= e2.day)
-        return 1;
-    else return -1;
 }
 
 /*
  * add - event handler to add a selection to the user's calendar
 */
-function add(e){
+function _add(e) {
     var index = e.getAttribute("id");
     e.getElementsByTagName("img")[0].setAttribute("class", "liked");
-// =======
-//     var JQtarget = $(e.target);
-//     var index = e.target.parentNode.parentNode.getAttribute("id");
-//     JQtarget.parent().find("img").toggleClass("liked");
+    
     var entry;
     if (index >= entries.length) {
         entry = likes[index - entries.length];
     } else {
         entry = entries[index];
     }
+
     if (!containsEntry(toAdd, entry)) {
         toAdd.push(entry);
         e.getElementsByTagName("h2")[0].innerHTML = "Remove <br> from <br> calendar";
@@ -182,6 +187,7 @@ function add(e){
         e.getElementsByClassName("inner")[0].className = "inner four columns ";
     }
 }
+
 function reveal(e){
     e.getElementsByTagName("h2")[0].style.visibility = "visible";
 }
@@ -189,6 +195,7 @@ function reveal(e){
 function hide(e){
     e.getElementsByTagName("h2")[0].style.visibility = "hidden";
 }
+
 function createEntry(entry, index){
     
     var date = entry.month + "/" + entry.day + "/" + entry.year;
@@ -260,7 +267,7 @@ function removeEntry(array, entry) {
     }
 }
 
-function onSubmit(){
+function onSubmit() {
     document.getElementById("personal").style.display = "block";
     var baseUrl = "http://www.tastekid.com/ask/ws?q=";
     var likesUrl = baseUrl+document.getElementById('likes').value+"&f=nushyt4577&k=nznkmjqxm2e0&verbose=1&format=JSON&jsonp=likesCallback";
@@ -272,7 +279,7 @@ function onSubmit(){
     document.getElementById('likes').value = "";
 }
 
-function likesCallback(data){
+function likesCallback(data) {
     //get likes
     var name = data['Similar']['Info']['0']['Name'];
     var type = data['Similar']['Info']['0']['Type'];
@@ -305,9 +312,10 @@ function likesCallback(data){
 
 
 
-function callback(){
-    entries = entries.sort(entryCompare);
-    
+function callback() {
+    entries = entries.sort(function(e1, e2) {
+        return e1.compare(e2);
+    });
     $("#results"). empty();
     var count = 0;
     entries.forEach(function(entry) {
@@ -318,7 +326,7 @@ function callback(){
 
 var color;
 
-function all(){
+function all() {
     var count = 0;
     var items = document.getElementsByClassName("result");
     $.each(items, function(index, item) {
@@ -329,10 +337,10 @@ function all(){
         tabs[i].style.backgroundColor = "#043731";
     }
     document.getElementById("all").style.backgroundColor = "#34C6CD";
-    color = "#34C6CD";
+    window.color = "#34C6CD";
 }
 
-function movies(){
+function movies() {
     var count = 0;
     var items = document.getElementsByClassName("result");
     $.each(entries, function(index, entry) {
@@ -348,10 +356,10 @@ function movies(){
         tabs[i].style.backgroundColor = "#043731";
     }
     document.getElementById("movies").style.backgroundColor = "#34C6CD";
-    color = "#34C6CD";
+    window.color = "#34C6CD";
 }
 
-function tv(){
+function tv() {
     var count = 0;
     var items = document.getElementsByClassName("result");
     $.each(entries, function(index, entry) {
@@ -367,10 +375,10 @@ function tv(){
         tabs[i].style.backgroundColor = "#043731";
     }
     document.getElementById("tv").style.backgroundColor = "#34C6CD";
-    color = "#34C6CD";
+    window.color = "#34C6CD";
 }
 
-function music(){
+function music() {
     var count = 0;
     var items = document.getElementsByClassName("result");
     $.each(entries, function(index, entry) {
@@ -386,10 +394,10 @@ function music(){
         tabs[i].style.backgroundColor = "#043731";
     }
     document.getElementById("music").style.backgroundColor = "#34C6CD";
-    color = "#34C6CD";
+    window.color = "#34C6CD";
 }
 
-function games(){
+function games() {
     var count = 0;
     var items = document.getElementsByClassName("result");
     $.each(entries, function(index, entry) {
@@ -405,17 +413,17 @@ function games(){
         tabs[i].style.backgroundColor = "#043731";
     }
     document.getElementById("games").style.backgroundColor = "#34C6CD";
-    color = "#34C6CD";
+    window.color = "#34C6CD";
 }
 
 
-function tabHover(e){
-    color = e.style.backgroundColor;
+function tabHover(e) {
+    window.color = e.style.backgroundColor;
     e.style.backgroundColor = "#339999";
 }
 
-function tabUnhover(e){
-    e.style.backgroundColor = color;
+function tabUnhover(e) {
+    e.style.backgroundColor = window.color;
 }
 
 $(document).ready(function() {
@@ -424,7 +432,9 @@ $(document).ready(function() {
     var tab = document.getElementById("tv").addEventListener('click', tv, false);
     var tab = document.getElementById("music").addEventListener('click', music, false);
     var tab = document.getElementById("games").addEventListener('click', games, false);
-    setInterval(function(){drawBanner()}, 3000);
+    setInterval(function() {
+        drawBanner();
+    }, 3000);
 });
 
 
