@@ -171,6 +171,7 @@ function tvCallback(data) {
         identifier = '</a>';
         index = html.indexOf(identifier);
         title = html.substring(0, index);
+        title = title.replace(": Season 1", "");
 
         //get date:
         var identifier = 'Start date:';

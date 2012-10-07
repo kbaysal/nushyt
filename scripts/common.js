@@ -2,6 +2,7 @@ var likes = [];
 var inputs = [];
 var entries = [];
 var toAdd = [];
+var preferred = [];
 
 var clientId = '696158853178.apps.googleusercontent.com';
 var scopes = 'https://www.googleapis.com/auth/calendar';
@@ -206,7 +207,7 @@ function createEntry(entry, index){
                           +'<h1>' + entry.title + '</h1>'
                           +'<h2> Add <br> to <br> calendar </h2>'
                           +'<h3>' + entry.detail + date + '</h1>'
-                          +'<img src="' + entry.picture + '" />'
+                          +'<img alt="' + entry.title + ' image" src="' + entry.picture + '" />'
                           +'</div>'
                           +'</div>');
     
@@ -225,7 +226,7 @@ function createPersonal(entry, index){
                           +'<h1>' + entry.title + '</h1>'
                           +'<h2> Add <br> to <br> calendar </h2>'
                           +'<h3>' + entry.detail + date + '</h1>'
-                          +'<img src="' + entry.picture + '" />'
+                          +'<img alt="' + entry.title + ' image" src="' + entry.picture + '" />'
                           +'</div>'
                           +'</div>');
     
@@ -302,6 +303,8 @@ function likesCallback(data) {
         entries.forEach(function(entry){
             likes.forEach(function(like){
                 if(entry['title'].toLowerCase() === like['Name'].toLowerCase()){
+                    if(containsEntry(preferred, entry) === false)
+                        preferred.push(entry);
                     createPersonal(entry, count);
                     count++
                 }
@@ -327,11 +330,13 @@ function callback() {
 var color;
 
 function all() {
-    var count = 0;
     var items = document.getElementsByClassName("result");
     $.each(items, function(index, item) {
         items[index].style.display = "block";
     });
+    for(var i = 0; i<preferred.length; i++){
+        document.getElementById(i+entries.length).style.display = "block";
+    }
     var tabs = document.getElementsByClassName("tab");
     for(var i = 0; i<tabs.length; i++){
         tabs[i].style.backgroundColor = "#043731";
@@ -341,16 +346,22 @@ function all() {
 }
 
 function movies() {
-    var count = 0;
-    var items = document.getElementsByClassName("result");
-    $.each(entries, function(index, entry) {
-        if(entry.type !== "movie")
-            items[index].style.display = "none";
+    var items = document.getElementById("results").getElementsByClassName("result");
+    for(var i = 0; i<items.length; i++){
+        if(entries[i].type !== "movie")
+            items[i].style.display = "none";
         else{
-            items[index].style.display = "block";
+            items[i].style.display = "block";
         }
-        count++;
-    });
+    }
+    for(var i = 0; i<preferred.length; i++){
+        if(preferred[i].type !== "movie"){
+            document.getElementById(i+entries.length).style.display = "none";
+        }
+        else{
+            document.getElementById(i+entries.length).style.display = "block";
+        }
+    }
     var tabs = document.getElementsByClassName("tab");
     for(var i = 0; i<tabs.length; i++){
         tabs[i].style.backgroundColor = "#043731";
@@ -360,16 +371,22 @@ function movies() {
 }
 
 function tv() {
-    var count = 0;
-    var items = document.getElementsByClassName("result");
-    $.each(entries, function(index, entry) {
-        if(entry.type !== "tv")
-            items[index].style.display = "none";
+    var items = document.getElementById("results").getElementsByClassName("result");
+    for(var i = 0; i<items.length; i++){
+        if(entries[i].type !== "tv")
+            items[i].style.display = "none";
         else{
-            items[index].style.display = "block";
+            items[i].style.display = "block";
         }
-        count++;
-    });
+    }
+    for(var i = 0; i<preferred.length; i++){
+        if(preferred[i].type !== "tv"){
+            document.getElementById(i+entries.length).style.display = "none";
+        }
+        else{
+            document.getElementById(i+entries.length).style.display = "block";
+        }
+    }
     var tabs = document.getElementsByClassName("tab");
     for(var i = 0; i<tabs.length; i++){
         tabs[i].style.backgroundColor = "#043731";
@@ -378,17 +395,23 @@ function tv() {
     window.color = "#34C6CD";
 }
 
-function music() {
-    var count = 0;
-    var items = document.getElementsByClassName("result");
-    $.each(entries, function(index, entry) {
-        if(entry.type !== "music")
-            items[index].style.display = "none";
+function music() { 
+    var items = document.getElementById("results").getElementsByClassName("result");
+    for(var i = 0; i<items.length; i++){
+        if(entries[i].type !== "music")
+            items[i].style.display = "none";
         else{
-            items[index].style.display = "block";
+            items[i].style.display = "block";
         }
-        count++;
-    });
+    }
+    for(var i = 0; i<preferred.length; i++){
+        if(preferred[i].type !== "music"){
+            document.getElementById(i+entries.length).style.display = "none";
+        }
+        else{
+            document.getElementById(i+entries.length).style.display = "block";
+        }
+    }
     var tabs = document.getElementsByClassName("tab");
     for(var i = 0; i<tabs.length; i++){
         tabs[i].style.backgroundColor = "#043731";
@@ -398,16 +421,23 @@ function music() {
 }
 
 function games() {
-    var count = 0;
-    var items = document.getElementsByClassName("result");
-    $.each(entries, function(index, entry) {
-        if(entry.type !== "game")
-            items[index].style.display = "none";
-        else{
-            items[index].style.display = "block";
+    var items = document.getElementById("results").getElementsByClassName("result");
+    for(var i = 0; i<items.length; i++){
+        if(entries[i].type !== "game"){
+            items[i].style.display = "none";
         }
-        count++;
-    });
+        else{
+            items[i].style.display = "block";
+        }
+    }
+    for(var i = 0; i<preferred.length; i++){
+        if(preferred[i].type !== "game"){
+            document.getElementById(i+entries.length).style.display = "none";
+        }
+        else{
+            document.getElementById(i+entries.length).style.display = "block";
+        }
+    }
     var tabs = document.getElementsByClassName("tab");
     for(var i = 0; i<tabs.length; i++){
         tabs[i].style.backgroundColor = "#043731";
