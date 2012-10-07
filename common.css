@@ -1,275 +1,272 @@
 body{
 	background-image: url('./images/gplaypattern.png');
-	color: #FFF;
-	font-family: 'Crete Round', serif;
-	z-index: -1;
+    color: #FFF;
+    font-family: 'Crete Round', serif;
+    z-index: -1;
 }
 
 .help{
-	position: fixed;
-	top:0px;
-	left:0px;
-	text-align: center;
-	padding-top: 6px;
-	font-size: 32px;
-	height:44px;
-	width:50px;
-	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 1500;
-	overflow: hidden;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    text-align: center;
+    padding-top: 6px;
+    font-size: 32px;
+    height: 44px;
+    width: 50px;
+    background-color: #FFFF47;
+    z-index: 1500;
+    overflow: hidden;
 
-	border-radius: 20px;
+    border-radius: 20px;
 
-	-webkit-transition: all 1s ease-in-out 0s;
-	-moz-transition: all 1s ease-in-out 0s;
-	transition: all 1s ease-in-out 0s;
+    -webkit-transition: all 1s ease-in-out 0s;
+    -moz-transition: all 1s ease-in-out 0s;
+    transition: all 1s ease-in-out 0s;
 }
 
 .help:hover{
-	-webkit-transition-property: width, height, background;
-	-webkit-transition-duration: 1s, 1s, 1s;
-	-moz-transition-property: width, height, background;
-	-moz-transition-duration: 1s, 1s, 1s;
-	transition-property: width, height, background;
-	transition-duration: 1s, 1s, 1s;
+    -webkit-transition-property: width, height, background;
+    -webkit-transition-duration: 1s, 1s, 1s;
+    -moz-transition-property: width, height, background;
+    -moz-transition-duration: 1s, 1s, 1s;
+    transition-property: width, height, background;
+    transition-duration: 1s, 1s, 1s;
 
-	padding-top: 10px;
-	padding-left: 4px;
-	padding-right: 4px;
-	width: 340px;
-	height: 340px;
-	background-color: green;
+    padding-top: 10px;
+    padding-left: 4px;
+    padding-right: 4px;
+    width: 340px;
+    height: 340px;
+    background-color: green;
 }
 
-.nohover{
-	-webkit-transition: all 1s ease-in-out 0s;
-	-moz-transition: all 1s ease-in-out 0s;
-	transition: all 1s ease-in-out 0s;
+.noHover{
+    -webkit-transition: all 1s ease-in-out 0s;
+    -moz-transition: all 1s ease-in-out 0s;
+    transition: all 1s ease-in-out 0s;
 
-	display: block;
-	opacity:1;
-	height: 50;
+    display: block;
+    opacity: 1;
+    height: 50;
 }
 
-.help:hover .nohover{
-	-webkit-transition-property: all 1s ease-in-out 0s;
-	-moz-transition-property: all 1s ease-in-out 0s;
-	transition-property: all 1s ease-in-out 0s;
+.help:hover .noHover{
+    -webkit-transition-property: all 1s ease-in-out 0s;
+    -moz-transition-property: all 1s ease-in-out 0s;
+    transition-property: all 1s ease-in-out 0s;
 
-	opacity:0;
-	height:0;
+    opacity: 0;
+    height: 0;
 }
 
 .hover{
-	-webkit-transition: opacity 0s ease-in-out 0s;
-	-moz-transition: opacity 0s ease-in-out 0s;
-	transition: opacity 0s ease-in-out 0s;
-	opacity: 0;
-	height:0;
-	font-size:22px;
+    -webkit-transition: opacity 0s ease-in-out 0s;
+    -moz-transition: opacity 0s ease-in-out 0s;
+    transition: opacity 0s ease-in-out 0s;
+    opacity: 0;
+    height: 0;
+    font-size: 22px;
 }
 
 .help:hover .hover{
-	-webkit-transition: opacity 1s ease-out 1s;
-	-moz-transition: opacity 1s ease-out 1s;
-	transtion: opacity 1s ease-out 1s;
-	opacity: 1;
-	height:320px;
+    -webkit-transition: opacity 1s ease-out 1s;
+    -moz-transition: opacity 1s ease-out 1s;
+    transtion: opacity 1s ease-out 1s;
+    opacity: 1;
+    height: 320px;
 }
 
 #devs{
-	-webkit-text-stroke: 0px #000;
-	-moz-text-stroke: 0px #000;
-	text-stroke: 0px #000;
+    -webkit-text-stroke: 0px #000;
+    -moz-text-stroke: 0px #000;
+    text-stroke: 0px #000;
 
-	position: relative bottom;
-	font-size:12px;
-	
+    position: relative bottom;
+    font-size: 12px;
+    
 }
 
 #mycanvas{
-	position: fixed;
-	top:0px;
-	height: 100px;
-	z-index:1000;
-	-moz-box-shadow:    0px 1px  5px 2px #043731;
-	-webkit-box-shadow:    0px 1px  5px 2px #043731;
-	box-shadow:    0px 1px  5px 2px #043731;
+    position: fixed;
+    top: 0px;
+    height: 100px;
+    z-index: 1000;
+    -moz-box-shadow: 0px 1px  5px 2px #043731;
+    -webkit-box-shadow: 0px 1px  5px 2px #043731;
+    box-shadow: 0px 1px  5px 2px #043731;
 }
 
 .header{
-	position: fixed;
-	top:0px;
-	height: 100px;
-	color: #FFF;
-	z-index:1001;
-	font-size: 72px;
-	text-align:center;
-	background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0px;
+    height: 100px;
+    color: #FFF;
+    z-index: 1001;
+    font-size: 72px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .top_bar{
-	position:static;
-	margin-top:120px;
-	height: 30px;
+    position: static;
+    margin-top: 120px;
+    height: 30px;
 }
 
 .tabs{
-	list-style: none;
-	text-align:center;
-	font-size: 25px;
-	clear:both;
-	position:static;
-	top:130px;
-	margin-left:10px;
+    list-style: none;
+    text-align: center;
+    font-size: 25px;
+    clear: both;
+    position: static;
+    top: 130px;
+    margin-left: 10px;
 }
 
 .tab:hover{
-	background-color: #339999;
+    background-color: #339999;
 }
 
 .tab{
-	float:left;
-	height: 50px;
-	margin-left: 1px;
-	margin-right: 1px;
-	margin-top: 1px;
-	margin-bottom: 1px;
-	vertical-align: text-bottom;
-	color: white;
-	display: inline;
-	cursor: pointer;
-	background-color: #043731;
+    float:left;
+    height: 50px;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    vertical-align: text-bottom;
+    color: white;
+    display: inline;
+    cursor: pointer;
+    background-color: #043731;
 }
 
 #all{
-	background-color: #34C6CD;
+    background-color: #34C6CD;
 }
 
 
 #prefs{
-	position: static;
-	height:40px;
+    position: static;
+    height: 40px;
 }
 
 #prefs input {        
-	margin-top:20px;
-	border-radius: 10px;
-	height:40px;
-	border: 1px solid #CDCDCD;
-	text-align: center;
-	color: #043731;
-	font-family: 'Crete Round', serif;
+    margin-top: 20px;
+    border-radius: 10px;
+    height: 40px;
+    border: 1px solid #CDCDCD;
+    text-align: center;
+    color: #043731;
+    font-family: 'Crete Round', serif;
 }
 
 #personal{
-	position: static;
-	top: 140px;
-	display: none;
+    position: static;
+    top: 140px;
+    display: none;
 }
 
 
 #personal .result{
-	float:left;	
-	height: 150px;
-	margin-top: 25px;
-	color: white;
-	-moz-box-shadow:    0px 1px  5px 2px red;
-	-webkit-box-shadow:    0px 1px  5px 2px red;
-	box-shadow:    0px 1px  5px 2px red;
-	background-color:black;
-   	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
-	box-sizing: border-box;         /* Opera/IE 8+ */
-	background-repeat: no-repeat;
-	background-size: Auto 100%;
-	background-position:center; 
+    float: left;    
+    height: 150px;
+    margin-top: 25px;
+    color: white;
+    -moz-box-shadow: 0px 1px  5px 2px red;
+    -webkit-box-shadow: 0px 1px  5px 2px red;
+    box-shadow: 0px 1px  5px 2px red;
+    background-color: black;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+    background-repeat: no-repeat;
+    background-size: Auto 100%;
+    background-position: center; 
 }
 
 #results{
-	position: static;
-	top: 140px;
+    position: static;
+    top: 140px;
 }
 
 #results .result{
-	float:left;	
-	height: 150px;
-	margin-top: 25px;
-	color: white;
-	-moz-box-shadow:    0px 1px  5px 2px #043731;
-	-webkit-box-shadow:    0px 1px  5px 2px #043731;
-	box-shadow:    0px 1px  5px 2px #043731;
-	background-color:black;
-   	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
-	box-sizing: border-box;         /* Opera/IE 8+ */
-	background-repeat: no-repeat;
-	background-size: Auto 100%;
-	background-position:center; 
+    float: left;    
+    height: 150px;
+    margin-top: 25px;
+    color: white;
+    -moz-box-shadow: 0px 1px  5px 2px #043731;
+    -webkit-box-shadow: 0px 1px  5px 2px #043731;
+    box-shadow: 0px 1px  5px 2px #043731;
+    background-color: black;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+    background-repeat: no-repeat;
+    background-size: Auto 100%;
+    background-position: center; 
 
 }
 
 #results .result:active{
-	position: relative;
+    position: relative;
     top: 2px;
-	-moz-box-shadow:    0px 1px  3px 0px #043731;
-	-webkit-box-shadow: 0px 1px  3px 0px #043731;
-	box-shadow:         0px 1px  3px 0px #043731;
+    -moz-box-shadow:    0px 1px  3px 0px #043731;
+    -webkit-box-shadow: 0px 1px  3px 0px #043731;
+    box-shadow:         0px 1px  3px 0px #043731;
 }
 
 .inner{
-	height: 150px;
-	background-color: rgba(0, 0, 0, 0.5);
+    height: 150px;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .show{
     background-repeat: no-repeat;
-	background-image: url("./images/star.png");
-	background-position: right bottom;
+    background-image: url("./images/star.png");
+    background-position: right bottom;
 }
 
 .result img{
-	position: absolute;
-	top: 0px;
-	display: inline-block;
+    position: absolute;
+    top: 0px;
+    display: inline-block;
+    visibility: hidden;
 }
 
 .result h1{
-	font-size: 20px;
-	color: white;
-	position: relative;
-	top: 10px;
-	overflow: hidden;
-	height:40px;
-	width:650px;
+    font-size: 20px;
+    color: white;
+    position: relative;
+    top: 10px;
+    overflow: hidden;
+    height: 40px;
+    width: 650px;
 }
 .result h2{
-	font-size: 40px;
-	position: relative;
-	top: -40px;
-	padding-top: 15px;
-	height: 135px;
-	color: white;
-	text-align: center;
-	background-color: rgba(0, 0, 0, 0.8);
-	visibility: hidden;
-	z-index: 500;
+    font-size: 40px;
+    position: relative;
+    top: -40px;
+    padding-top: 15px;
+    height: 135px;
+    color: white;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    visibility: hidden;
+    z-index: 500;
 }
 .result h3{
-	position: relative;
-	top:-110px;
-	color: white;
-}
-
-.result img{
-	visibility: hidden;
+    position: relative;
+    top: -110px;
+    color: white;
 }
 
 .star{
-	height: 30px;
-	width:30px;
-	position: relative;
-	top:120px;
-	right: 0px;
+    height: 30px;
+    width: 30px;
+    position: relative;
+    top: 120px;
+    right: 0px;
 }
 

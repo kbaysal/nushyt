@@ -83,8 +83,8 @@ function getLocation() {
         }, {timeout:5000});
     }
     else{
-        count++;
-        if(count==totalCalls){
+        window.count++;
+        if(window.count==window.totalCalls){
             callback();
         }
     }
@@ -107,8 +107,8 @@ function showPosition(position) {
 }
 
 function showError(error) {
-    count++;
-    if(count==totalCalls){
+    window.count++;
+    if(window.count==window.totalCalls){
         callback();
     }
 }
@@ -132,19 +132,19 @@ function conCallback(data) {
             images = event.venue.image;
             img = images[0]['#text'];
             images.forEach(function(image){
-            if(image.size=="large")
-                img = image['#text'];
+                if(image.size=="large")
+                    img = image['#text'];
             });
         }
         entry = new Entry(event.title, month, day, year, "performing at - " + event.venue.name+":", img, "music");
         entries.push(entry);
     });  
-    count++;
-    if(count==totalCalls){
+    window.count++;
+    if(window.count==window.totalCalls){
         callback();
     }
 }
- 
+
 // callback for when we get back the results
 function theaterCallback(data) {
     var movies = data.movies;
@@ -157,8 +157,8 @@ function theaterCallback(data) {
         entry = new Entry(movie.title, month, day, year, "In Theaters: ", movie.posters.thumbnail, "movie");
         entries.push(entry);
     });
-    count++;
-    if(count==totalCalls){
+    window.count++;
+    if(window.count==window.totalCalls){
         callback();
     }
 }
@@ -174,9 +174,9 @@ function dvdCallback(data) {
         entry = new Entry(movie.title, month, day, year, "On DVD: ", movie.posters.thumbnail, "movie");
         entries.push(entry)
     });
-    count++;
+    window.count++;
 
-    if(count==totalCalls){
+    if(window.count==window.totalCalls){
         callback();
     }
 }
@@ -234,8 +234,8 @@ function tvCallback(data) {
         entries.push(entry);
         counter++;
     }
-    count++;
-    if(count==totalCalls){
+    window.count++;
+    if(window.count==window.totalCalls){
         callback();
     }
 }
@@ -311,8 +311,8 @@ function gameCallback(data) {
         entries.push(entry);
         counter++;
     }
-    count++;
-    if(count==totalCalls){
+    window.count++;
+    if(window.count==window.totalCalls){
         callback();
     }
 }
@@ -320,7 +320,7 @@ function gameCallback(data) {
 
 var imageCount = 0;
 var albumNum;
- 
+
 // callback for when we get back the results
 function albumCallback(data) {
     var entry, day, month, year, date, title, band;
@@ -350,8 +350,8 @@ function imageCallback(data){
     var found = false;
     imageCount++;
     if(imageCount === albumNum){ 
-        count++;
-        if(count==totalCalls){
+        window.count++;
+        if(window.count==window.totalCalls){
             callback();
         }
     }
@@ -429,10 +429,11 @@ function concertCallback(data) {
             });
         });
     }
+    
     locationCount--;
     if (locationCount == 0 && concertCount == 0) {
-        count++;
-        if(count==totalCalls){
+        window.count++;
+        if(window.count==window.totalCalls){
             callback();
         }
     }
@@ -453,8 +454,8 @@ function processedConcert(functionName) {
     delete window[functionName];
     concertCount--;
     if (locationCount == 0 && concertCount == 0) {
-        count++;
-        if(count == totalCalls){
+        window.count++;
+        if(window.count == window.totalCalls){
             callback();
         }
     }
