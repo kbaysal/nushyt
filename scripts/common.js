@@ -54,7 +54,7 @@ function authorize() {
 }
 
 function _checkAuth() {
-    gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: true}, handleAuthResult);
+    gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: true}, _handleAuthResult);
 }
 
 function _handleAuthResult(authResult) {
@@ -62,17 +62,17 @@ function _handleAuthResult(authResult) {
     if (authResult && !authResult.error) {
         _makeApiCall();
     } else {
-        authorizeButton.onclick = handleAuthClick;
+        authorizeButton.onclick = _handleAuthClick;
     }
 }
 
 function _handleAuthClick(event) {
-    gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, makeApiCall);
+    gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, _makeApiCall);
     return false;
 }
 
 function _makeApiCall() {
-    gapi.client.load('calendar', 'v3', createNushytCalendar);
+    gapi.client.load('calendar', 'v3', _createNushytCalendar);
 }
 
 function _createNushytCalendar() {
@@ -93,7 +93,7 @@ function _parseList(jsonResp, rawResp) {
     list.forEach(function(calendar) {
         if (lookingForCal && calendar.summary === "Nushyt") {
             nushytCalId = calendar.id;
-            populateNushytCalendar();
+            _populateNushytCalendar();
             lookingForCal = false;
         }
     })
