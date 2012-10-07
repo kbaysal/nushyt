@@ -35,6 +35,6 @@ Ajax calls: We make Ajax calls to 9 different API/websites.
 Transitions: We used transitions to animate our help button.
 CSS: lots of fun things like pseudo elements for hover.
 DOM manipulation: one example is that each time you click on a tab we don't make a second request we just change what's being shown.
-
+Forms: search bar
 
 
