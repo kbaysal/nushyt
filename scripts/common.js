@@ -202,7 +202,7 @@ function createEntry(entry, index){
     var date = entry.month + "/" + entry.day + "/" + entry.year;
     if(entry.month == "TBD"){
         var date = "TBD"
-    }$("#results").append('<div class=\"result four columns ' + entry.type + '\" id=\"' + index +  '\" onclick=\"add(this)\" onmouseover=\"reveal(this)\" onmouseout=\"hide(this)\">'
+    }$("#results").append('<div class=\"result four columns ' + entry.type + '\" id=\"' + index +  '\" onclick=\"_add(this)\" onmouseover=\"reveal(this)\" onmouseout=\"hide(this)\">'
                           +'<div class=\"inner four columns \">'
                           +'<h1>' + entry.title + '</h1>'
                           +'<h2> Add <br> to <br> calendar </h2>'
@@ -221,7 +221,7 @@ function createPersonal(entry, index){
     if(entry.month == "TBD"){
         var date = "TBD"
     }
-    $("#personal").append('<div class=\"result four columns ' + entry.type + '\" id=\"' + index +  '\" onclick=\"add(this)\" onmouseover=\"reveal(this)\" onmouseout=\"hide(this)\">'
+    $("#personal").append('<div class=\"result four columns ' + entry.type + '\" id=\"' + index +  '\" onclick=\"_add(this)\" onmouseover=\"reveal(this)\" onmouseout=\"hide(this)\">'
                           +'<div class=\"inner four columns \">'
                           +'<h1>' + entry.title + '</h1>'
                           +'<h2> Add <br> to <br> calendar </h2>'
@@ -334,6 +334,9 @@ function all() {
     $.each(items, function(index, item) {
         items[index].style.display = "block";
     });
+    for(var i = 0; i<preferred.length; i++){
+        document.getElementById(i+entries.length).style.display = "block";
+    }
     var tabs = document.getElementsByClassName("tab");
     for(var i = 0; i<tabs.length; i++){
         tabs[i].style.backgroundColor = "#043731";
@@ -349,6 +352,14 @@ function movies() {
             items[i].style.display = "none";
         else{
             items[i].style.display = "block";
+        }
+    }
+    for(var i = 0; i<preferred.length; i++){
+        if(preferred[i].type !== "movie"){
+            document.getElementById(i+entries.length).style.display = "none";
+        }
+        else{
+            document.getElementById(i+entries.length).style.display = "block";
         }
     }
     var tabs = document.getElementsByClassName("tab");
@@ -368,6 +379,14 @@ function tv() {
             items[i].style.display = "block";
         }
     }
+    for(var i = 0; i<preferred.length; i++){
+        if(preferred[i].type !== "tv"){
+            document.getElementById(i+entries.length).style.display = "none";
+        }
+        else{
+            document.getElementById(i+entries.length).style.display = "block";
+        }
+    }
     var tabs = document.getElementsByClassName("tab");
     for(var i = 0; i<tabs.length; i++){
         tabs[i].style.backgroundColor = "#043731";
@@ -383,6 +402,14 @@ function music() {
             items[i].style.display = "none";
         else{
             items[i].style.display = "block";
+        }
+    }
+    for(var i = 0; i<preferred.length; i++){
+        if(preferred[i].type !== "music"){
+            document.getElementById(i+entries.length).style.display = "none";
+        }
+        else{
+            document.getElementById(i+entries.length).style.display = "block";
         }
     }
     var tabs = document.getElementsByClassName("tab");
@@ -401,6 +428,14 @@ function games() {
         }
         else{
             items[i].style.display = "block";
+        }
+    }
+    for(var i = 0; i<preferred.length; i++){
+        if(preferred[i].type !== "game"){
+            document.getElementById(i+entries.length).style.display = "none";
+        }
+        else{
+            document.getElementById(i+entries.length).style.display = "block";
         }
     }
     var tabs = document.getElementsByClassName("tab");
