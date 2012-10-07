@@ -334,9 +334,6 @@ function all() {
     $.each(items, function(index, item) {
         items[index].style.display = "block";
     });
-    for(var i = 0; i<preferred.length; i++){
-        document.getElementById(i+entries.length).style.display = "block";
-    }
     var tabs = document.getElementsByClassName("tab");
     for(var i = 0; i<tabs.length; i++){
         tabs[i].style.backgroundColor = "#043731";
@@ -352,14 +349,6 @@ function movies() {
             items[i].style.display = "none";
         else{
             items[i].style.display = "block";
-        }
-    }
-    for(var i = 0; i<preferred.length; i++){
-        if(preferred[i].type !== "movie"){
-            document.getElementById(i+entries.length).style.display = "none";
-        }
-        else{
-            document.getElementById(i+entries.length).style.display = "block";
         }
     }
     var tabs = document.getElementsByClassName("tab");
@@ -379,14 +368,6 @@ function tv() {
             items[i].style.display = "block";
         }
     }
-    for(var i = 0; i<preferred.length; i++){
-        if(preferred[i].type !== "tv"){
-            document.getElementById(i+entries.length).style.display = "none";
-        }
-        else{
-            document.getElementById(i+entries.length).style.display = "block";
-        }
-    }
     var tabs = document.getElementsByClassName("tab");
     for(var i = 0; i<tabs.length; i++){
         tabs[i].style.backgroundColor = "#043731";
@@ -402,14 +383,6 @@ function music() {
             items[i].style.display = "none";
         else{
             items[i].style.display = "block";
-        }
-    }
-    for(var i = 0; i<preferred.length; i++){
-        if(preferred[i].type !== "music"){
-            document.getElementById(i+entries.length).style.display = "none";
-        }
-        else{
-            document.getElementById(i+entries.length).style.display = "block";
         }
     }
     var tabs = document.getElementsByClassName("tab");
@@ -428,14 +401,6 @@ function games() {
         }
         else{
             items[i].style.display = "block";
-        }
-    }
-    for(var i = 0; i<preferred.length; i++){
-        if(preferred[i].type !== "game"){
-            document.getElementById(i+entries.length).style.display = "none";
-        }
-        else{
-            document.getElementById(i+entries.length).style.display = "block";
         }
     }
     var tabs = document.getElementsByClassName("tab");
