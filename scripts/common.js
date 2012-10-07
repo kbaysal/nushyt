@@ -213,7 +213,7 @@ function createPersonal(entry, index){
     if(entry.month == "TBD"){
         var date = "TBD"
     }
-    $("#personal").append('<div class=\"result four columns ' + entry.type + '\" id=\"' + index +  '\">'
+    $("#personal").append('<div class=\"result four columns ' + entry.type + '\" id=\"' + index +  '\" onclick=\"add(this)\" onmouseover=\"reveal(this)\" onmouseout=\"hide(this)\">'
                           +'<div class=\"inner four columns \">'
                           +'<h1>' + entry.title + '</h1>'
                           +'<h2> Add <br> to <br> calendar </h2>'
@@ -221,11 +221,7 @@ function createPersonal(entry, index){
                           +'<img src="' + entry.picture + '" />'
                           +'</div>'
                           +'</div>');
-    var addButton = document.getElementById(index).addEventListener('click', add, false);
-    var addButton = document.getElementById(index).addEventListener('mouseenter', reveal, false);
-    var addButton = document.getElementById(index).addEventListener('mouseleave', hide, false);
-    document.getElementById(index).style.backgroundImage = "url("+entry.picture+")";
-
+    
     if(entry.picture !== "" )
         document.getElementById(index).style.backgroundImage = "url("+entry.picture+")";
  

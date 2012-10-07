@@ -1,22 +1,3 @@
-Changes:
-All the things that youve added to the calendar are starred.
-You can also remove things from calendar
-Concert calls are done in one call now. 
-
-<h1>There's an issue with canvas. I couldn't figure it out. Could either of you take a look at it please, preferably Ted.</h1>
-
-
-TODO:
-* Style
-* Animation/transitions -> WE NEED IDEAS!
-	- Can we animate out all the divs as they appear? We can make the <h2> tag move down when clicked? Animate between tabs?
-    - Added help box: hover on it, and it displays help text; however, need to make it so the text only appears after the box has transitioned to the new size.  Tried playing around with delays, but it wasn't working.
-
-If we had more time:
-* have a pool of keywords for each entry so that if the person says they like animations for example, we will give a list of animations
-* have a page for each entry that can give more information
-
-README:
 Darren Lane dslane
 Ted Smongeski esmonges
 Kiraz Baysa kbaysal
@@ -41,7 +22,6 @@ APIs used:
 5)Yahoo YQL
 6)Google Calendar
 7)Songkick
-8)EchoNest
 
 Webpages scraped using YQL:
 1)metacritic.com
@@ -50,5 +30,11 @@ Webpages scraped using YQL:
 
 Things we're using that we learned in class: 
 Canvas: We made a banner out of canvas that adds an image of the things you added to your calendar.
+Skeleton: We made our site responsive by using skeleton and adding more to it.
+Ajax calls: We make Ajax calls to 9 different API/websites.
+Transitions: We used transitions to animate our help button.
+CSS: lots of fun things like pseudo elements for hover.
+DOM manipulation: one example is that each time you click on a tab we don't make a second request we just change what's being shown.
+
 
 
