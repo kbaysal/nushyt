@@ -188,11 +188,11 @@ function _add(e) {
     }
 }
 
-function _reveal(e){
+function reveal(e){
     e.getElementsByTagName("h2")[0].style.visibility = "visible";
 }
 
-function _hide(e){
+function hide(e){
     e.getElementsByTagName("h2")[0].style.visibility = "hidden";
 }
 

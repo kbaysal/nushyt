@@ -3,7 +3,7 @@ var totalCalls = 6;
 
 function callbackIfLoaded() {
     window.count++;
-    if(window.count==window.totalCalls) {
+    if(window.count == window.totalCalls) {
         callback();
     }
 }
@@ -80,11 +80,13 @@ $(document).ready(function() {
 });
 
 function _getLocation() {
-    var timeout = 5000;
+    var timeout = 1000;
     var timeoutHandler = setTimeout(_showError, timeout);
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             clearTimeout(timeoutHandler);
+            if (window.count == window.totalCalls)
+                window.totalCalls += 1;
             _showPosition(position);
         }, function(error) {
             clearTimeout(timeoutHandler);
@@ -348,11 +350,11 @@ function concertCallback(data) {
     var events = data.resultsPage.results.event;
     var type = "music";
     var imageSearchBaseUrl = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&api_key=b25b959554ed76058ac220b7b2e0a026&format=json&artist=";
-    var title, venue, date, month, day, year, detail, entry, dateString, url, callback;
+    var title, venue, date, month, day, year, detail, entry, dateString, url;
     if (events != undefined) {
         window.concertCount += events.length;
         events.forEach(function(event) {
-            if (undefined !== event.start.datetime) {
+            if (null !== event.start.datetime) {
                 dateString = event.start.datetime
             }
             else {
@@ -367,7 +369,7 @@ function concertCallback(data) {
             detail = "performing at " + venue + ": ";
             entry = new Entry(title, month + 1, day, year, detail, "", type);
             url = imageSearchBaseUrl + event.performance[0].artist.displayName;
-            callback = createImageCallback(entries.length);
+            var callback = createImageCallback(entries.length);
             
             entries.push(entry);
             $.ajax({
