@@ -1,9 +1,9 @@
 /*
- * drawBanner - Takes the images from the current page and draws them on the canvas.
- * TODO - Randomize more, remove deadcode before submission
+ * drawBanner - Takes the images from the current page and draws them on the canvas at the top of the screen.
+ * 
  */
-    var imPos = 0;
-    var imInd = 0;
+ var imPos = 0;
+ var imInd = 0;
 
  function drawBanner(){
     var delay = 60;
@@ -11,7 +11,7 @@
     setFadeDrawIntervalN(delay, fadeTime/delay);
 };
 
-    
+
 
 /*
  * setInterval - Wrapper function to set an interval for fading the image in over 
@@ -21,8 +21,8 @@
  function setFadeDrawIntervalN(delay, repetitions){
 
     var canvas = $("#myCanvas");
-    var cWidth = parseInt(canvas.css("width"));
-    var cHeight = parseInt(canvas.css("height"));
+    var cWidth = parseInt(canvas.attr("width"));
+    var cHeight = parseInt(canvas.attr("height"));
     var POSTER_HEIGHT = 67;
     var ctx = canvas[0].getContext('2d');
     var currentReps = 0;
@@ -32,13 +32,15 @@
 
     var imgs = $(".liked");
     var totalImgs = imgs.length;
-
-    //Randomly select image to draw
     var img = imgs[imInd];
 
     if(totalImgs === 0 || $(img).attr("src") === ""){
         return;
     }
+
+    /*
+     * Anonymous function to fade in the given image on the canvas
+     */
 
     intervalID = setInterval(function(){
 
@@ -53,5 +55,5 @@
                 imPos = (imPos+1)%NIMS;
             else
                 imPos = 0;
-        }}, delay);
-}
+    }}, delay);
+ }
