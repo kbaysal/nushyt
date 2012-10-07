@@ -173,7 +173,7 @@ function _add(e) {
     
     var entry;
     if (index >= entries.length) {
-        entry = likes[index - entries.length];
+        entry = preferred[index - entries.length];
     } else {
         entry = entries[index];
     }
